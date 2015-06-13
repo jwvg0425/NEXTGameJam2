@@ -1,0 +1,5 @@
+0.2
+player_right2.png 1
+player_right1.png 1
+player_right2.png 1
+player_right3.png 1

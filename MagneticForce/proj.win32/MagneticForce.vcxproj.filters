@@ -10,6 +10,9 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resource\data">
+      <UniqueIdentifier>{f80eadae-3e28-46a6-8263-b38b697f5a79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -18,7 +21,13 @@
     <ClCompile Include="..\Classes\AppDelegate.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+    <ClCompile Include="..\Classes\GameScene.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DataManager.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\TileMap.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +38,13 @@
     <ClInclude Include="..\Classes\AppDelegate.h">
       <Filter>Classes</Filter>
     </ClInclude>
-    <ClInclude Include="..\Classes\HelloWorldScene.h">
+    <ClInclude Include="..\Classes\GameScene.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DataManager.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\TileMap.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -37,5 +52,25 @@
     <ResourceCompile Include="game.rc">
       <Filter>resource</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Resources\data\player_up.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_down.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_right.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_left.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\cave_wall.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\map.txt">
+      <Filter>resource\data</Filter>
+    </Text>
   </ItemGroup>
 </Project>
