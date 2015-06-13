@@ -73,7 +73,8 @@ void Unit::update(float dTime)
 	}
 	else
 	{
-		//부딪히면 힘 0으로. 나중엔 hp 달게끔
+		//부딪히면 데미지 입고 힘 0으로. 속도 10당 데미지 1.
+		m_Hp -= m_Force.getLength() / 10.0f;
 		m_Force.x = 0.0f;
 		m_Force.y = 0.0f;
 	}

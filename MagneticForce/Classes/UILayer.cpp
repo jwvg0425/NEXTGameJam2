@@ -1,6 +1,7 @@
 ﻿#include "UILayer.h"
 #include "DataManager.h"
 #include "AppDelegate.h"
+#include "Player.h"
 
 bool UILayer::init()
 {
@@ -28,5 +29,15 @@ bool UILayer::init()
 	m_MP->setPosition(WIDTH / 2 - 120, 5);
 	addChild(m_MP);
 
+	scheduleUpdate();
+
 	return true;
+}
+
+void UILayer::update(float dTime)
+{
+	auto player = DataManager::getInstance()->getPlayer();
+
+	m_HP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, player->getHp() / player->getMaxHp()*240.0f, 64.0f));
+	m_MP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, player->getMp() / player->getMaxMp()*240.0f, 64.0f));
 }

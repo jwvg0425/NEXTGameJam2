@@ -31,6 +31,12 @@ public:
 	cocos2d::Rect getMoveBox() const { return m_MoveBox; }
 	cocos2d::Rect getHitBox() const { return m_HitBox; }
 
+	float getMaxHp() const { return m_MaxHp; }
+	float getHp() const { return m_Hp; }
+
+	void setMaxHp(float maxHp) { m_MaxHp = maxHp; }
+	void setHp(float hp) { m_Hp = hp; }
+
 protected:
 
 	Direction m_Dir = Direction::DOWN;
@@ -43,4 +49,7 @@ protected:
 	//마찰 정도. 클 수록 힘이 빠르게 감소함.
 	float m_Friction = 0.0f;
 	cocos2d::Vec2 m_Force;
+
+	float m_MaxHp = 100.0f;
+	float m_Hp = 100.0f;
 };

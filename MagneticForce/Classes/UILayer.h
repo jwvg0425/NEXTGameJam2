@@ -11,6 +11,8 @@ public:
 
 	CREATE_FUNC(UILayer);
 
+	void update(float dTime);
+
 private:
 	cocos2d::Sprite* m_HP;
 	cocos2d::Sprite* m_MP;
