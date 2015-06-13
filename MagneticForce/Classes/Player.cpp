@@ -25,7 +25,7 @@ bool Player::init()
 	m_MoveBox = cocos2d::Rect(-14, -18, 7, -11);
 	m_HitBox = cocos2d::Rect(-14, -18, 7, 14);
 	//dash 0.5초
-	m_Friction = m_Dash * 2;
+	m_Friction = m_Dash * 2.5;
 
 	DataManager::getInstance()->initPlayer(this);
 
@@ -80,6 +80,12 @@ void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Even
 
 	if (m_Force.x > 0.5f || m_Force.x < -0.5f ||
 		m_Force.y > 0.5f || m_Force.y < -0.5f)
+	{
+		return;
+	}
+
+	// 특정 동작 중에도 딴 행동 불가
+	if (m_State == ACT)
 	{
 		return;
 	}
@@ -177,11 +183,13 @@ void Player::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Eve
 
 void Player::changeDirection(Direction dir)
 {
-	if (m_State == MOVE || m_Dir != dir)
+	auto prevDir = m_Dir;
+	Unit::changeDirection(dir);
+
+	if (m_State == MOVE && prevDir != m_Dir)
 	{
 		setState(MOVE);
 	}
-	Unit::changeDirection(dir);
 }
 
 void Player::update(float dTime)

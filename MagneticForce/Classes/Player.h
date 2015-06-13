@@ -7,7 +7,8 @@ public:
 	enum State
 	{
 		IDLE,
-		MOVE
+		MOVE,
+		ACT
 	};
 
 	Player() = default;
