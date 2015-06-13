@@ -1,5 +1,6 @@
 ﻿#include "Player.h"
 #include "GameScene.h"
+#include "TileMap.h"
 
 USING_NS_CC;
 
@@ -20,6 +21,9 @@ bool Player::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
 
 	scheduleUpdate();
+
+	m_MoveBox = cocos2d::Rect(-14, -18, 7, -11);
+	m_HitBox = cocos2d::Rect(-14, -18, 7, 14);
 
 	return true;
 }
@@ -139,24 +143,29 @@ void Player::changeDirection(Direction dir)
 
 void Player::update(float dTime)
 {
-	//충돌 체크 일단 없이 움직임만.
-
 	if (m_State == MOVE)
 	{
+		Point nextPos = getPosition();
+
 		switch (m_Dir)
 		{
 		case Direction::UP:
-			setPosition(getPositionX(), getPositionY() + m_Speed*dTime);
+			nextPos.setPoint(getPositionX(), getPositionY() + m_Speed*dTime);
 			break;
 		case Direction::RIGHT:
-			setPosition(getPositionX() + m_Speed*dTime, getPositionY());
+			nextPos.setPoint(getPositionX() + m_Speed*dTime, getPositionY());
 			break;
 		case Direction::DOWN:
-			setPosition(getPositionX(), getPositionY() - m_Speed*dTime);
+			nextPos.setPoint(getPositionX(), getPositionY() - m_Speed*dTime);
 			break;
 		case Direction::LEFT:
-			setPosition(getPositionX() - m_Speed*dTime, getPositionY());
+			nextPos.setPoint(getPositionX() - m_Speed*dTime, getPositionY());
 			break;
+		}
+
+		if (!solidCheck(nextPos))
+		{
+			setPosition(nextPos);
 		}
 	}
 

@@ -14,6 +14,8 @@ public:
 	// x, y 좌표가 중심에 오도록 화면 좌표 변경
 	void setFocus(float x, float y);
 
+	TileMap* getMap() const { return m_Map; }
+
 private:
 	TileMap* m_Map;
 };

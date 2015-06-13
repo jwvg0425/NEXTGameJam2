@@ -13,7 +13,8 @@ public:
 
 	static TileMap* createWithFile(const std::string& fileName, cocos2d::Layer* layer);
 
-	bool isSolidTile(int x, int y) const;
+	bool isSolidTile(int x, int y) const; // 칸 기반
+	bool isSolidTile(float x, float y, cocos2d::Rect size) const; // 실 좌표 기반
 	int getTile(int layer, int x, int y, int out = -1) const;
 
 	int getWidth() const { return m_Width; }

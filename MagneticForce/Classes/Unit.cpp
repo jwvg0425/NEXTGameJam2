@@ -1,5 +1,8 @@
 ﻿#include "Unit.h"
 #include "DataManager.h"
+#include "GameScene.h"
+#include "TileMap.h"
+
 
 USING_NS_CC;
 
@@ -35,4 +38,16 @@ void Unit::changeSprite(const std::string& name, bool isAni)
 void Unit::changeDirection(Direction dir)
 {
 	m_Dir = dir;
+}
+
+bool Unit::solidCheck(cocos2d::Point pos)
+{
+	GameScene* scene = static_cast<GameScene*>(getParent());
+
+	if (scene->getMap()->isSolidTile(pos.x, pos.y, m_MoveBox))
+	{
+		return true;
+	}
+
+	return false;
 }

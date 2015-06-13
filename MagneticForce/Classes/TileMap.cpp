@@ -58,7 +58,10 @@ bool TileMap::initWithFile(const std::string& fileName, cocos2d::Layer* layer)
 				{
 					int tileNum;
 					file >> tileNum;
-					m_SolidMap[i] = (m_SolidMap[i] || DataManager::getInstance()->getTileProperty(m_Tiles[tileNum]) == TileProperty::SOLID);
+					if (tileNum != -1)
+					{
+						m_SolidMap[i] = (m_SolidMap[i] || ((DataManager::getInstance()->getTileProperty(m_Tiles[tileNum]) & TileProperty::SOLID) != 0));
+					}
 					m_TileMap[l][i] = tileNum;
 				}
 			}
@@ -172,6 +175,28 @@ bool TileMap::isSolidTile(int x, int y) const
 	}
 
 	return m_SolidMap[y*m_Width + x];
+}
+
+bool TileMap::isSolidTile(float x, float y, cocos2d::Rect size) const
+{
+	int cutXleft = (x + size.origin.x) / 48.0f;
+	int cutXright = (x + size.size.width) / 48.0f;
+	int cutYdown = m_Height - ((y + size.origin.y) / 48.0f);
+	int cutYup = m_Height - ((y + size.size.height) / 48.0f);
+
+	if (x + size.origin.x < 0 || x + size.size.width >= m_Width*48.0f ||
+		y + size.origin.y < 0 || y + size.size.height >= m_Height*48.0f)
+	{
+		return true;
+	}
+
+	if (isSolidTile(cutXleft, cutYup) || isSolidTile(cutXleft, cutYdown) ||
+		isSolidTile(cutXright, cutYup) || isSolidTile(cutXright, cutYdown))
+	{
+		return true;
+	}
+
+	return false;
 }
 
 int TileMap::getTile(int layer, int x, int y, int out /*= -1*/) const
