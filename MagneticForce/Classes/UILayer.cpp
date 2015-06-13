@@ -29,6 +29,22 @@ bool UILayer::init()
 	m_MP->setPosition(WIDTH / 2 - 120, 5);
 	addChild(m_MP);
 
+	auto skill_ui = DataManager::getInstance()->getSprite("skill_ui");
+
+	skill_ui->setAnchorPoint({ 0.0f, 0.0f });
+	skill_ui->setPosition(WIDTH / 2 + 140, 5);
+	addChild(skill_ui);
+
+	m_Pull = DataManager::getInstance()->getSprite("skill_a");
+	m_Pull->setAnchorPoint({ 0.0f, 0.0f });
+	m_Pull->setPosition(WIDTH / 2 + 140, 5 + 48);
+	addChild(m_Pull);
+
+	m_Push = DataManager::getInstance()->getSprite("skill_s");
+	m_Push->setAnchorPoint({ 0.0f, 0.0f });
+	m_Push->setPosition(WIDTH / 2 + 140 + 48, 5 + 48);
+	addChild(m_Push);
+
 	scheduleUpdate();
 
 	return true;

@@ -173,6 +173,10 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Resources\data\map.txt" />
+    <Text Include="..\Resources\data\player_act_down.txt" />
+    <Text Include="..\Resources\data\player_act_left.txt" />
+    <Text Include="..\Resources\data\player_act_right.txt" />
+    <Text Include="..\Resources\data\player_act_up.txt" />
     <Text Include="..\Resources\data\player_down.txt" />
     <Text Include="..\Resources\data\player_left.txt" />
     <Text Include="..\Resources\data\player_right.txt" />

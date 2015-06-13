@@ -50,6 +50,9 @@ public:
 	void collision(float power) override;
 	void collision(const cocos2d::Vector<Unit*>& units, float power) override;
 
+	bool isEnablePush() const { return m_EnablePush; }
+	bool isEnablePull() const { return m_EnablePull; }
+
 private:
 	State m_State;
 	ActType m_Type = NONE;
@@ -59,4 +62,6 @@ private:
 	float m_MaxMp = 100.0f;
 	float m_Mp = 100.0f;
 	float m_PullPower = 20000.0f;
+	bool m_EnablePush = true;
+	bool m_EnablePull = true;
 };

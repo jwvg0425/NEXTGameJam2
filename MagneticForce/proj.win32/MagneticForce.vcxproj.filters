@@ -96,5 +96,17 @@
     <Text Include="..\Resources\data\tile.txt">
       <Filter>resource\data</Filter>
     </Text>
+    <Text Include="..\Resources\data\player_act_down.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_left.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_right.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_up.txt">
+      <Filter>resource\data</Filter>
+    </Text>
   </ItemGroup>
 </Project>

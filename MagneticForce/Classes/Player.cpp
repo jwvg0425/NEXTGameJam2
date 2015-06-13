@@ -109,13 +109,19 @@ void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Even
 		break;
 	//a키 누르면 인력 발동
 	case EventKeyboard::KeyCode::KEY_A:
-		setState(ACT);
-		m_Type = PULL;
+		if (m_EnablePull)
+		{
+			setState(ACT);
+			m_Type = PULL;
+		}
 		break;
 	//s키 누르면 척력 발동
 	case EventKeyboard::KeyCode::KEY_S:
-		setState(ACT);
-		m_Type = PUSH;
+		if (m_EnablePush)
+		{
+			setState(ACT);
+			m_Type = PUSH;
+		}
 		break;
 	}
 }
@@ -282,7 +288,8 @@ void Player::pull(float dTime)
 
 			auto xCut = myPos.x - 24.0f;
 
-			if (realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f &&
+			if (((realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f) ||
+				(realHit.origin.y + hitBox.size.height < myPos.y + 24.0f && realHit.origin.y + hitBox.size.height > myPos.y - 24.0f)) &&
 				realHit.origin.x + hitBox.size.width < xCut)
 				return true;
 
@@ -302,7 +309,8 @@ void Player::pull(float dTime)
 
 			auto yCut = myPos.y + 24.0f;
 
-			if (realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f &&
+			if (((realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f) ||
+				(realHit.origin.x + hitBox.size.width < myPos.x + 24.0f && realHit.origin.x + hitBox.size.width > myPos.x - 24.0f)) &&
 				realHit.origin.y > yCut)
 				return true;
 
@@ -322,7 +330,8 @@ void Player::pull(float dTime)
 
 			auto xCut = myPos.x + 24.0f;
 
-			if (realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f &&
+			if (((realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f) ||
+				(realHit.origin.y + hitBox.size.height < myPos.y + 24.0f && realHit.origin.y + hitBox.size.height > myPos.y - 24.0f)) &&
 				realHit.origin.x > xCut)
 				return true;
 
@@ -342,7 +351,8 @@ void Player::pull(float dTime)
 
 			auto yCut = myPos.y - 24.0f;
 
-			if (realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f &&
+			if (((realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f) ||
+				(realHit.origin.x + hitBox.size.width < myPos.x + 24.0f && realHit.origin.x + hitBox.size.width > myPos.x - 24.0f)) &&
 				realHit.origin.y + hitBox.size.height < yCut)
 				return true;
 
@@ -381,7 +391,8 @@ void Player::push(float dTime)
 
 			auto xCut = myPos.x - 24.0f;
 
-			if (realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f &&
+			if (((realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f) ||
+				(realHit.origin.y + hitBox.size.height < myPos.y + 24.0f && realHit.origin.y + hitBox.size.height > myPos.y - 24.0f)) &&
 				realHit.origin.x + hitBox.size.width < xCut)
 				return true;
 
@@ -401,7 +412,8 @@ void Player::push(float dTime)
 
 			auto yCut = myPos.y + 24.0f;
 
-			if (realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f &&
+			if (((realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f) ||
+				(realHit.origin.x + hitBox.size.width < myPos.x + 24.0f && realHit.origin.x + hitBox.size.width > myPos.x - 24.0f)) &&
 				realHit.origin.y > yCut)
 				return true;
 
@@ -421,7 +433,8 @@ void Player::push(float dTime)
 
 			auto xCut = myPos.x + 24.0f;
 
-			if (realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f &&
+			if (((realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f) ||
+				(realHit.origin.y + hitBox.size.height < myPos.y + 24.0f && realHit.origin.y + hitBox.size.height > myPos.y - 24.0f)) &&
 				realHit.origin.x > xCut)
 				return true;
 
@@ -441,7 +454,8 @@ void Player::push(float dTime)
 
 			auto yCut = myPos.y - 24.0f;
 
-			if (realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f &&
+			if (((realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f) ||
+				(realHit.origin.x + hitBox.size.width < myPos.x + 24.0f && realHit.origin.x + hitBox.size.width > myPos.x - 24.0f)) &&
 				realHit.origin.y + hitBox.size.height < yCut)
 				return true;
 
