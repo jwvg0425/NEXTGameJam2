@@ -20,13 +20,16 @@ public:
 
 	virtual void changeDirection(Direction dir);
 
-	bool solidCheck(cocos2d::Point pos);
+	bool moveCheck(cocos2d::Point pos);
 
 	//힘을 가함
 	void force(float fx, float fy);
 
 	//기본적으로 해주어야하는 unit update 연산.
 	void update(float dTime);
+
+	cocos2d::Rect getMoveBox() const { return m_MoveBox; }
+	cocos2d::Rect getHitBox() const { return m_HitBox; }
 
 protected:
 

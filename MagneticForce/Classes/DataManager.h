@@ -27,6 +27,7 @@ enum TileProperty
 };
 
 class Unit;
+class Player;
 
 class DataManager
 {
@@ -39,10 +40,14 @@ public:
 	int					getTileProperty(const std::string& tileName);
 	Unit*				getObject(const std::string& objName);
 
+	void				initPlayer(Player* player) { m_Player = player; }
+	Player*				getPlayer() const { return m_Player; }
+
 private:
 	DataManager();
 	~DataManager();
 
 	cocos2d::Map<std::string, cocos2d::Animation*> m_Animations;
 	std::map<std::string, int> m_TileProperties;
+	Player* m_Player = nullptr;
 };

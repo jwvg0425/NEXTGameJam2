@@ -25,6 +25,8 @@ bool Player::init()
 	m_MoveBox = cocos2d::Rect(-14, -18, 7, -11);
 	m_HitBox = cocos2d::Rect(-14, -18, 7, 14);
 
+	DataManager::getInstance()->initPlayer(this);
+
 	return true;
 }
 
@@ -166,7 +168,7 @@ void Player::update(float dTime)
 			break;
 		}
 
-		if (!solidCheck(nextPos))
+		if (!moveCheck(nextPos))
 		{
 			setPosition(nextPos);
 		}

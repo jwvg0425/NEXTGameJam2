@@ -69,8 +69,10 @@ cocos2d::Sprite* DataManager::getTile(const std::string& fileName, TileType type
 
 cocos2d::Sprite* DataManager::getSprite(const std::string& fileName)
 {
-	return Sprite::create("graphics/" + fileName + ".png");
+	auto sprite = Sprite::create("graphics/" + fileName + ".png");
+	sprite->getTexture()->setAliasTexParameters();
 
+	return sprite;
 }
 
 void DataManager::initTile()

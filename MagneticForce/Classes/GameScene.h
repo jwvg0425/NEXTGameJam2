@@ -1,7 +1,9 @@
 #pragma once
 #include "cocos2d.h"
+#include "Unit.h"
 
 class TileMap;
+class UILayer;
 
 class GameScene : public cocos2d::Layer
 {
@@ -16,6 +18,14 @@ public:
 
 	TileMap* getMap() const { return m_Map; }
 
+	void addUnit(Unit* unit);
+
+	bool moveCheck(Unit* unit, cocos2d::Point pos);
+
+	bool hitCheck(Unit* unit, cocos2d::Point pos);
+
 private:
 	TileMap* m_Map;
+	cocos2d::Vector<Unit*> m_Units;
+	UILayer* m_UI;
 };

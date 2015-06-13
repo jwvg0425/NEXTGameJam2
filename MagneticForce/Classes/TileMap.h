@@ -2,6 +2,8 @@
 #include "cocos2d.h"
 #include "DataManager.h"
 
+class GameScene;
+
 class TileMap : public cocos2d::Node
 {
 public:
@@ -9,9 +11,9 @@ public:
 	TileMap() = default;
 	~TileMap() override = default;
 
-	bool initWithFile(const std::string& fileName, cocos2d::Layer* layer);
+	bool initWithFile(const std::string& fileName, GameScene* scene);
 
-	static TileMap* createWithFile(const std::string& fileName, cocos2d::Layer* layer);
+	static TileMap* createWithFile(const std::string& fileName, GameScene* scene);
 
 	bool isSolidTile(int x, int y) const; // 칸 기반
 	bool isSolidTile(float x, float y, cocos2d::Rect size) const; // 실 좌표 기반

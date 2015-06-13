@@ -1,10 +1,11 @@
 ﻿#include "TileMap.h"
 #include "Unit.h"
+#include "GameScene.h"
 #include <fstream>
 
 USING_NS_CC;
 
-bool TileMap::initWithFile(const std::string& fileName, cocos2d::Layer* layer)
+bool TileMap::initWithFile(const std::string& fileName, GameScene* scene)
 {
 	if (!Node::init())
 	{
@@ -75,7 +76,7 @@ bool TileMap::initWithFile(const std::string& fileName, cocos2d::Layer* layer)
 			file >> object >> x >> y;
 
 			auto unit = DataManager::getInstance()->getObject(object);
-			layer->addChild(unit);
+			scene->addUnit(unit);
 			unit->setPosition(x * 48 + 24, (m_Height - y) * 48 - 24);
 		}
 	}
@@ -148,11 +149,11 @@ bool TileMap::initWithFile(const std::string& fileName, cocos2d::Layer* layer)
 	return true;
 }
 
-TileMap* TileMap::createWithFile(const std::string& fileName, cocos2d::Layer* layer)
+TileMap* TileMap::createWithFile(const std::string& fileName, GameScene* scene)
 {
 	TileMap* ret = new TileMap();
 	
-	if (ret != nullptr && ret->initWithFile(fileName, layer))
+	if (ret != nullptr && ret->initWithFile(fileName, scene))
 	{
 		ret->autorelease();
 

@@ -25,6 +25,7 @@ void Unit::changeSprite(const std::string& name, bool isAni)
 	else
 	{
 		m_Sprite = Sprite::create();
+		m_Sprite->getTexture()->setAliasTexParameters();
 		auto animation = DataManager::getInstance()->getAnimation(name);
 		auto animate = Animate::create(animation);
 		auto repeat = RepeatForever::create(animate);
@@ -40,11 +41,16 @@ void Unit::changeDirection(Direction dir)
 	m_Dir = dir;
 }
 
-bool Unit::solidCheck(cocos2d::Point pos)
+bool Unit::moveCheck(cocos2d::Point pos)
 {
 	GameScene* scene = static_cast<GameScene*>(getParent());
 
 	if (scene->getMap()->isSolidTile(pos.x, pos.y, m_MoveBox))
+	{
+		return true;
+	}
+
+	if (scene->moveCheck(this, pos))
 	{
 		return true;
 	}
