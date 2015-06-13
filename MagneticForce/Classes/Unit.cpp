@@ -51,3 +51,42 @@ bool Unit::solidCheck(cocos2d::Point pos)
 
 	return false;
 }
+
+void Unit::force(float fx, float fy)
+{
+	m_Force.add({ fx, fy });
+}
+
+void Unit::update(float dTime)
+{
+	//0.5f보다 작아지면 그냥 0
+	setPosition(getPositionX() + m_Force.x, getPositionY() + m_Force.y);
+
+	if (m_Force.x > 0.5f)
+	{
+		m_Force.x -= m_Friction *dTime;
+	}
+	else if (m_Force.x < -0.5f)
+	{
+		m_Force.x += m_Friction*dTime;
+	}
+	else
+	{
+		m_Force.x = 0.0f;
+	}
+
+	if (m_Force.y > 0.5f)
+	{
+		m_Force.y -= m_Friction *dTime;
+	}
+	else if (m_Force.y < -0.5f)
+	{
+		m_Force.y += m_Friction*dTime;
+	}
+	else
+	{
+		m_Force.y = 0.0f;
+	}
+
+	setZOrder(-getPositionY());
+}

@@ -1,5 +1,6 @@
 ﻿#include "DataManager.h"
 #include "Player.h"
+#include "box.h"
 #include <fstream>
 
 USING_NS_CC;
@@ -104,5 +105,10 @@ Unit* DataManager::getObject(const std::string& objName)
 	{
 		return Player::create();
 	}
+	else if (objName == "box")
+	{
+		return Box::create();
+	}
+
 	return nullptr;
 }

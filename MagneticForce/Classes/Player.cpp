@@ -143,6 +143,9 @@ void Player::changeDirection(Direction dir)
 
 void Player::update(float dTime)
 {
+	//기본 update
+	Unit::update(dTime);
+
 	if (m_State == MOVE)
 	{
 		Point nextPos = getPosition();

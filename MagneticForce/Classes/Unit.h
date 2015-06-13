@@ -22,11 +22,22 @@ public:
 
 	bool solidCheck(cocos2d::Point pos);
 
+	//힘을 가함
+	void force(float fx, float fy);
+
+	//기본적으로 해주어야하는 unit update 연산.
+	void update(float dTime);
+
 protected:
+
 	Direction m_Dir = Direction::DOWN;
 	cocos2d::Sprite* m_Sprite = nullptr;
 
 	//중점을 기준으로 왼쪽,위까지 거리, 오른쪽,아래까지 거리 저장.(x,y,width,height 의미로 사용하지 않음)
 	cocos2d::Rect m_MoveBox;
 	cocos2d::Rect m_HitBox;
+
+	//마찰 정도. 클 수록 힘이 빠르게 감소함.
+	float m_Friction = 0.0f;
+	cocos2d::Vec2 m_Force;
 };

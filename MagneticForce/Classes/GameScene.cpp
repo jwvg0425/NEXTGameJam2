@@ -24,7 +24,7 @@ bool GameScene::init()
 	m_Map = TileMap::createWithFile("map", this);
 	m_Map->setAnchorPoint({ 0.0f, 0.0f });
 
-	addChild(m_Map, -1);
+	addChild(m_Map, -100000);
 
     return true;
 }

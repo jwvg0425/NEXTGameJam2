@@ -31,5 +31,5 @@ public:
 private:
 	State m_State;
 	int m_ArrowPressed = 0;
-	float m_Speed = 100.0f;
+	float m_Speed = 200.0f;
 };
