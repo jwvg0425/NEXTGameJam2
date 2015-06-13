@@ -164,7 +164,7 @@ TileMap* TileMap::createWithFile(const std::string& fileName, cocos2d::Layer* la
 	}
 }
 
-bool TileMap::isSolidTile(int x, int y)
+bool TileMap::isSolidTile(int x, int y) const
 {
 	if (x < 0 || y < 0 || x >= m_Width || y >= m_Height)
 	{
@@ -174,7 +174,7 @@ bool TileMap::isSolidTile(int x, int y)
 	return m_SolidMap[y*m_Width + x];
 }
 
-int TileMap::getTile(int layer, int x, int y, int out /*= -1*/)
+int TileMap::getTile(int layer, int x, int y, int out /*= -1*/) const
 {
 	if (x < 0 || y < 0 || x >= m_Width || y >= m_Height)
 	{

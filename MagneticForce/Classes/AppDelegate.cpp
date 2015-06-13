@@ -16,7 +16,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     auto director = Director::getInstance();
     auto glview = director->getOpenGLView();
     if(!glview) {
-		glview = GLView::createWithRect("Magnetic Force", cocos2d::Rect(300, 300, 800, 600));
+		glview = GLView::createWithRect("Magnetic Force", cocos2d::Rect(300, 300, WIDTH, HEIGHT));
         director->setOpenGLView(glview);
     }
 

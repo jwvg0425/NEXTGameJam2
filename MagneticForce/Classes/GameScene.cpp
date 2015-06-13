@@ -1,5 +1,6 @@
 #include "GameScene.h"
 #include "TileMap.h"
+#include "AppDelegate.h"
 
 USING_NS_CC;
 
@@ -25,17 +26,41 @@ bool GameScene::init()
 
 	addChild(m_Map, -1);
 
-	/*
-	auto sprite = Sprite::create();
-	auto ani = DataManager::getInstance()->getAnimation("player_down");
-	auto animate = Animate::create(ani);
-	auto repeat = RepeatForever::create(animate);
-
-	sprite->runAction(repeat);
-	sprite->setPosition(100, 100);
-
-	addChild(sprite);
-	*/
-
     return true;
+}
+
+void GameScene::setFocus(float x, float y)
+{
+	float mapWidth = 48.0f * m_Map->getWidth();
+	float mapHeight = 48.0f * m_Map->getHeight();
+
+	float focusX, focusY;
+
+	if (x < WIDTH / 2)
+	{
+		focusX = 0;
+	}
+	else if (x > mapWidth - WIDTH / 2)
+	{
+		focusX = - mapWidth + WIDTH;
+	}
+	else
+	{
+		focusX = -x + WIDTH / 2;
+	}
+
+	if (y < HEIGHT / 2)
+	{
+		focusY = 0;
+	}
+	else if (y > mapHeight - HEIGHT / 2)
+	{
+		focusY = - mapHeight + HEIGHT;
+	}
+	else
+	{
+		focusY = -y + HEIGHT / 2;
+	}
+
+	setPosition(focusX, focusY);
 }

@@ -1,4 +1,5 @@
 ﻿#include "Player.h"
+#include "GameScene.h"
 
 USING_NS_CC;
 
@@ -158,6 +159,10 @@ void Player::update(float dTime)
 			break;
 		}
 	}
+
+	GameScene* scene = static_cast<GameScene*>(getParent());
+
+	scene->setFocus(getPositionX(), getPositionY());
 }
 
 void Player::setSpeed(float speed)

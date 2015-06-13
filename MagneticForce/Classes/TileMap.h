@@ -13,8 +13,11 @@ public:
 
 	static TileMap* createWithFile(const std::string& fileName, cocos2d::Layer* layer);
 
-	bool isSolidTile(int x, int y);
-	int getTile(int layer, int x, int y, int out = -1);
+	bool isSolidTile(int x, int y) const;
+	int getTile(int layer, int x, int y, int out = -1) const;
+
+	int getWidth() const { return m_Width; }
+	int getHeight() const { return m_Height; }
 
 private:
 	TileType getTileType(TileType pos, const std::array<bool, 8>& surrond);
