@@ -70,71 +70,54 @@ void Player::setState(State state)
 			break;
 		}
 		break;
+	case ACT:
+		switch (m_Dir)
+		{
+		case Direction::UP:
+			changeSprite("player_up2", false);
+			break;
+		case Direction::RIGHT:
+			changeSprite("player_right2", false);
+			break;
+		case Direction::DOWN:
+			changeSprite("player_down2", false);
+			break;
+		case Direction::LEFT:
+			changeSprite("player_left2", false);
+			break;
+		}
+		break;
 	}
 	m_State = state;
 }
 
 void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* e)
 {
-	//힘이 가해지고 있는 중에는 아무 동작 못함. 적당히 0.5f정도로.
-
-	if (m_Force.x > 0.5f || m_Force.x < -0.5f ||
-		m_Force.y > 0.5f || m_Force.y < -0.5f)
-	{
-		return;
-	}
-
-	// 특정 동작 중에도 딴 행동 불가
-	if (m_State == ACT)
-	{
-		return;
-	}
-
 	switch(keyCode)
 	{
 	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
-		changeDirection(Direction::LEFT);
 		m_ArrowPressed |= static_cast<int>(Direction::LEFT);
-		setState(MOVE);
 		break;
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
-		changeDirection(Direction::UP);
 		m_ArrowPressed |= static_cast<int>(Direction::UP);
-		setState(MOVE);
 		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
-		changeDirection(Direction::RIGHT);
 		m_ArrowPressed |= static_cast<int>(Direction::RIGHT);
-		setState(MOVE);
 		break;
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
-		changeDirection(Direction::DOWN);
 		m_ArrowPressed |= static_cast<int>(Direction::DOWN);
-		setState(MOVE);
 		break;
-	case EventKeyboard::KeyCode::KEY_SHIFT:
-		if (m_Dir == Direction::DOWN)
-		{
-			force(0, -m_Dash);
-		}
-		else if (m_Dir == Direction::UP)
-		{
-			force(0, m_Dash);
-		}
-		else if (m_Dir == Direction::LEFT)
-		{
-			force(-m_Dash, 0);
-		}
-		else
-		{
-			force(m_Dash, 0);
-		}
-		m_ArrowPressed = 0;
-		setState(IDLE);
+	//a키 누르면 인력 발동
+	case EventKeyboard::KeyCode::KEY_A:
+		setState(ACT);
+		m_Type = PULL;
+		break;
+	//s키 누르면 척력 발동
+	case EventKeyboard::KeyCode::KEY_S:
+		setState(ACT);
+		m_Type = PUSH;
 		break;
 	}
-
-	
 }
 
 void Player::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* e)
@@ -153,16 +136,47 @@ void Player::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Eve
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		m_ArrowPressed &= ~static_cast<int>(Direction::DOWN);
 		break;
+	case EventKeyboard::KeyCode::KEY_A:
+		if (m_State == ACT && m_Type == PULL)
+		{
+			setState(IDLE);
+		}
+		break;
+	case EventKeyboard::KeyCode::KEY_S:
+		if (m_State == ACT && m_Type == PUSH)
+		{
+			setState(IDLE);
+		}
+		break;
 	}
+}
 
-	if (m_ArrowPressed == 0)
+void Player::changeDirection(Direction dir)
+{
+	auto prevDir = m_Dir;
+	Unit::changeDirection(dir);
+
+	if (m_State == IDLE || (m_State == MOVE && prevDir != m_Dir))
 	{
-		setState(IDLE);
+		setState(MOVE);
 	}
-	else
+}
+
+void Player::update(float dTime)
+{
+	//기본 update
+	Unit::update(dTime);
+
+	GameScene* scene = static_cast<GameScene*>(getParent());
+	scene->setFocus(getPositionX(), getPositionY());
+
+	if (m_State != ACT)
 	{
-		//상,우,하,좌 순 우선순위 있음
-		if ((m_ArrowPressed & static_cast<int>(Direction::UP)) != 0)
+		if (m_ArrowPressed == 0)
+		{
+			setState(IDLE);
+		}
+		else if ((m_ArrowPressed & static_cast<int>(Direction::UP)) != 0)
 		{
 			changeDirection(Direction::UP);
 		}
@@ -179,26 +193,17 @@ void Player::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Eve
 			changeDirection(Direction::LEFT);
 		}
 	}
-}
-
-void Player::changeDirection(Direction dir)
-{
-	auto prevDir = m_Dir;
-	Unit::changeDirection(dir);
-
-	if (m_State == MOVE && prevDir != m_Dir)
-	{
-		setState(MOVE);
-	}
-}
-
-void Player::update(float dTime)
-{
-	//기본 update
-	Unit::update(dTime);
 
 	if (m_State == MOVE)
 	{
+		//힘이 가해지고 있는 상태면 idle 상태로 변경. 이동 불가.
+		if (m_Force.x > 0.5f || m_Force.x < -0.5f ||
+			m_Force.y > 0.5f || m_Force.y < -0.5f)
+		{
+			setState(IDLE);
+			return;
+		}
+
 		Point nextPos = getPosition();
 
 		switch (m_Dir)
@@ -222,13 +227,221 @@ void Player::update(float dTime)
 			setPosition(nextPos);
 		}
 	}
-
-	GameScene* scene = static_cast<GameScene*>(getParent());
-
-	scene->setFocus(getPositionX(), getPositionY());
+	else if (m_State == ACT)
+	{
+		switch (m_Type)
+		{
+		case PULL:
+			pull(dTime);
+			m_Mp -= 5.0f*dTime;
+			break;
+		case PUSH:
+			push(dTime);
+			m_Mp -= 5.0f*dTime;
+			break;
+		}
+	}
 }
 
 void Player::setSpeed(float speed)
 {
 	m_Speed = speed;
+}
+
+void Player::pull(float dTime)
+{
+	cocos2d::Vector<Unit*> units;
+	GameScene* scene = static_cast<GameScene*>(getParent());
+	auto myPos = getPosition();
+	float fx = 0.0f, fy = 0.0f;
+
+	switch (m_Dir)
+	{
+	case Direction::LEFT:
+		scene->hitCheck([myPos](Unit* unit) -> bool
+		{
+			auto pos = unit->getPosition();
+			auto hitBox = unit->getHitBox();
+
+			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
+				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
+
+			auto xCut = myPos.x - 24.0f;
+
+			if (realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f &&
+				realHit.origin.x + hitBox.size.width < xCut)
+				return true;
+
+			return false;
+
+		}, units);
+		fx = m_PullPower;
+		break;
+	case Direction::UP:
+		scene->hitCheck([myPos](Unit* unit) -> bool
+		{
+			auto pos = unit->getPosition();
+			auto hitBox = unit->getHitBox();
+
+			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
+				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
+
+			auto yCut = myPos.y + 24.0f;
+
+			if (realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f &&
+				realHit.origin.y > yCut)
+				return true;
+
+			return false;
+
+		}, units);
+		fy = -m_PullPower;
+		break;
+	case Direction::RIGHT:
+		scene->hitCheck([myPos](Unit* unit) -> bool
+		{
+			auto pos = unit->getPosition();
+			auto hitBox = unit->getHitBox();
+
+			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
+				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
+
+			auto xCut = myPos.x + 24.0f;
+
+			if (realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f &&
+				realHit.origin.x > xCut)
+				return true;
+
+			return false;
+
+		}, units);
+		fx = -m_PullPower;
+		break;
+	case Direction::DOWN:
+		scene->hitCheck([myPos](Unit* unit) -> bool
+		{
+			auto pos = unit->getPosition();
+			auto hitBox = unit->getHitBox();
+
+			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
+				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
+
+			auto yCut = myPos.y - 24.0f;
+
+			if (realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f &&
+				realHit.origin.y + hitBox.size.height < yCut)
+				return true;
+
+			return false;
+
+		}, units);
+		fy = m_PullPower;
+		break;
+	}
+
+	for (auto u : units)
+	{
+		auto dist = myPos.getDistance(u->getPosition());
+
+		u->force(fx*dTime / dist, fy*dTime / dist);
+	}
+}
+
+void Player::push(float dTime)
+{
+	cocos2d::Vector<Unit*> units;
+	GameScene* scene = static_cast<GameScene*>(getParent());
+	auto myPos = getPosition();
+	float fx = 0.0f, fy = 0.0f;
+
+	switch (m_Dir)
+	{
+	case Direction::LEFT:
+		scene->hitCheck([myPos](Unit* unit) -> bool
+		{
+			auto pos = unit->getPosition();
+			auto hitBox = unit->getHitBox();
+
+			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
+				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
+
+			auto xCut = myPos.x - 24.0f;
+
+			if (realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f &&
+				realHit.origin.x + hitBox.size.width < xCut)
+				return true;
+
+			return false;
+
+		}, units);
+		fx = -m_PullPower;
+		break;
+	case Direction::UP:
+		scene->hitCheck([myPos](Unit* unit) -> bool
+		{
+			auto pos = unit->getPosition();
+			auto hitBox = unit->getHitBox();
+
+			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
+				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
+
+			auto yCut = myPos.y + 24.0f;
+
+			if (realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f &&
+				realHit.origin.y > yCut)
+				return true;
+
+			return false;
+
+		}, units);
+		fy = m_PullPower;
+		break;
+	case Direction::RIGHT:
+		scene->hitCheck([myPos](Unit* unit) -> bool
+		{
+			auto pos = unit->getPosition();
+			auto hitBox = unit->getHitBox();
+
+			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
+				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
+
+			auto xCut = myPos.x + 24.0f;
+
+			if (realHit.origin.y < myPos.y + 24.0f && realHit.origin.y > myPos.y - 24.0f &&
+				realHit.origin.x > xCut)
+				return true;
+
+			return false;
+
+		}, units);
+		fx = m_PullPower;
+		break;
+	case Direction::DOWN:
+		scene->hitCheck([myPos](Unit* unit) -> bool
+		{
+			auto pos = unit->getPosition();
+			auto hitBox = unit->getHitBox();
+
+			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
+				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
+
+			auto yCut = myPos.y - 24.0f;
+
+			if (realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f &&
+				realHit.origin.y + hitBox.size.height < yCut)
+				return true;
+
+			return false;
+
+		}, units);
+		fy = -m_PullPower;
+		break;
+	}
+
+	for (auto u : units)
+	{
+		auto dist = myPos.getDistance(u->getPosition());
+
+		u->force(fx*dTime / dist, fy*dTime / dist);
+	}
 }

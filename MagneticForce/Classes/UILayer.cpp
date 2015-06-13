@@ -38,6 +38,6 @@ void UILayer::update(float dTime)
 {
 	auto player = DataManager::getInstance()->getPlayer();
 
-	m_HP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, player->getHp() / player->getMaxHp()*240.0f, 64.0f));
-	m_MP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, player->getMp() / player->getMaxMp()*240.0f, 64.0f));
+	m_HP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, 20.0f + player->getHp() / player->getMaxHp()*201.0f, 64.0f));
+	m_MP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, 20.0f + player->getMp() / player->getMaxMp()*201.0f, 64.0f));
 }

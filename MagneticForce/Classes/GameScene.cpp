@@ -127,3 +127,14 @@ bool GameScene::hitCheck(Unit* unit, cocos2d::Point pos)
 
 	return false;
 }
+
+void GameScene::hitCheck(std::function<bool(Unit*)> func, OUT cocos2d::Vector<Unit*>& units)
+{
+	for (auto u : m_Units)
+	{
+		if (func(u))
+		{
+			units.pushBack(u);
+		}
+	}
+}

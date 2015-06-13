@@ -14,6 +14,8 @@ bool Box::init()
 	m_MoveBox = Rect(-13, -21, 14, -3);
 	m_HitBox = Rect(-13, -21, 14, 18);
 
+	m_Friction = 100.0f;
+
 	scheduleUpdate();
 	
 	return true;

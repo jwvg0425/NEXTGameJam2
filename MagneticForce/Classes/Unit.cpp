@@ -15,25 +15,41 @@ void Unit::changeSprite(const std::string& name, bool isAni)
 {
 	if (m_Sprite != nullptr)
 	{
-		removeChild(m_Sprite);
-	}
+		m_Sprite->stopAllActions();
 
-	if (!isAni)
-	{
-		m_Sprite = DataManager::getInstance()->getSprite(name);
+		if (!isAni)
+		{
+			m_Sprite->setTexture(DataManager::getInstance()->getSprite(name)->getTexture());
+		}
+		else
+		{
+			auto animation = DataManager::getInstance()->getAnimation(name);
+			auto animate = Animate::create(animation);
+			auto repeat = RepeatForever::create(animate);
+
+			m_Sprite->runAction(repeat);
+		}
 	}
 	else
 	{
-		m_Sprite = Sprite::create();
-		m_Sprite->getTexture()->setAliasTexParameters();
-		auto animation = DataManager::getInstance()->getAnimation(name);
-		auto animate = Animate::create(animation);
-		auto repeat = RepeatForever::create(animate);
 
-		m_Sprite->runAction(repeat);
+		if (!isAni)
+		{
+			m_Sprite = DataManager::getInstance()->getSprite(name);
+		}
+		else
+		{
+			m_Sprite = Sprite::create();
+			m_Sprite->getTexture()->setAliasTexParameters();
+			auto animation = DataManager::getInstance()->getAnimation(name);
+			auto animate = Animate::create(animation);
+			auto repeat = RepeatForever::create(animate);
+
+			m_Sprite->runAction(repeat);
+		}
+
+		addChild(m_Sprite);
 	}
-
-	addChild(m_Sprite);
 }
 
 void Unit::changeDirection(Direction dir)

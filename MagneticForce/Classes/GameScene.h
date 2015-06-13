@@ -21,8 +21,8 @@ public:
 	void addUnit(Unit* unit);
 
 	bool moveCheck(Unit* unit, cocos2d::Point pos);
-
 	bool hitCheck(Unit* unit, cocos2d::Point pos);
+	void hitCheck(std::function<bool(Unit*)> func, OUT cocos2d::Vector<Unit*>& units);
 
 private:
 	TileMap* m_Map;
