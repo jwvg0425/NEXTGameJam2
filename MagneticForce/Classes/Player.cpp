@@ -170,8 +170,18 @@ void Player::update(float dTime)
 	GameScene* scene = static_cast<GameScene*>(getParent());
 	scene->setFocus(getPositionX(), getPositionY());
 
+
 	if (m_State != ACT)
 	{
+		if (m_Mp < m_MaxMp - 2.0f*dTime)
+		{
+			m_Mp += 2.0f*dTime;
+		}
+		else
+		{
+			m_Mp = m_MaxMp;
+		}
+
 		if (m_ArrowPressed == 0)
 		{
 			setState(IDLE);
@@ -229,6 +239,10 @@ void Player::update(float dTime)
 	}
 	else if (m_State == ACT)
 	{
+		if (m_Mp < 5.0f*dTime)
+		{
+			setState(IDLE);
+		}
 		switch (m_Type)
 		{
 		case PULL:
@@ -258,7 +272,7 @@ void Player::pull(float dTime)
 	switch (m_Dir)
 	{
 	case Direction::LEFT:
-		scene->hitCheck([myPos](Unit* unit) -> bool
+		scene->conditionCheck([myPos](Unit* unit) -> bool
 		{
 			auto pos = unit->getPosition();
 			auto hitBox = unit->getHitBox();
@@ -278,7 +292,7 @@ void Player::pull(float dTime)
 		fx = m_PullPower;
 		break;
 	case Direction::UP:
-		scene->hitCheck([myPos](Unit* unit) -> bool
+		scene->conditionCheck([myPos](Unit* unit) -> bool
 		{
 			auto pos = unit->getPosition();
 			auto hitBox = unit->getHitBox();
@@ -298,7 +312,7 @@ void Player::pull(float dTime)
 		fy = -m_PullPower;
 		break;
 	case Direction::RIGHT:
-		scene->hitCheck([myPos](Unit* unit) -> bool
+		scene->conditionCheck([myPos](Unit* unit) -> bool
 		{
 			auto pos = unit->getPosition();
 			auto hitBox = unit->getHitBox();
@@ -318,7 +332,7 @@ void Player::pull(float dTime)
 		fx = -m_PullPower;
 		break;
 	case Direction::DOWN:
-		scene->hitCheck([myPos](Unit* unit) -> bool
+		scene->conditionCheck([myPos](Unit* unit) -> bool
 		{
 			auto pos = unit->getPosition();
 			auto hitBox = unit->getHitBox();
@@ -357,7 +371,7 @@ void Player::push(float dTime)
 	switch (m_Dir)
 	{
 	case Direction::LEFT:
-		scene->hitCheck([myPos](Unit* unit) -> bool
+		scene->conditionCheck([myPos](Unit* unit) -> bool
 		{
 			auto pos = unit->getPosition();
 			auto hitBox = unit->getHitBox();
@@ -377,7 +391,7 @@ void Player::push(float dTime)
 		fx = -m_PullPower;
 		break;
 	case Direction::UP:
-		scene->hitCheck([myPos](Unit* unit) -> bool
+		scene->conditionCheck([myPos](Unit* unit) -> bool
 		{
 			auto pos = unit->getPosition();
 			auto hitBox = unit->getHitBox();
@@ -397,7 +411,7 @@ void Player::push(float dTime)
 		fy = m_PullPower;
 		break;
 	case Direction::RIGHT:
-		scene->hitCheck([myPos](Unit* unit) -> bool
+		scene->conditionCheck([myPos](Unit* unit) -> bool
 		{
 			auto pos = unit->getPosition();
 			auto hitBox = unit->getHitBox();
@@ -417,7 +431,7 @@ void Player::push(float dTime)
 		fx = m_PullPower;
 		break;
 	case Direction::DOWN:
-		scene->hitCheck([myPos](Unit* unit) -> bool
+		scene->conditionCheck([myPos](Unit* unit) -> bool
 		{
 			auto pos = unit->getPosition();
 			auto hitBox = unit->getHitBox();
@@ -444,4 +458,15 @@ void Player::push(float dTime)
 
 		u->force(fx*dTime / dist, fy*dTime / dist);
 	}
+}
+
+void Player::collision(float power)
+{
+	//hp 일정량만큼 뺌
+	m_Hp -= power / 10.0f;
+}
+
+void Player::collision(const cocos2d::Vector<Unit*>& units, float power)
+{
+	m_Hp -= power / 10.0f;
 }

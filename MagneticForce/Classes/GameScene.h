@@ -22,7 +22,10 @@ public:
 
 	bool moveCheck(Unit* unit, cocos2d::Point pos);
 	bool hitCheck(Unit* unit, cocos2d::Point pos);
-	void hitCheck(std::function<bool(Unit*)> func, OUT cocos2d::Vector<Unit*>& units);
+	void conditionCheck(std::function<bool(Unit*)> func, OUT cocos2d::Vector<Unit*>& units);
+
+	void update(float dTime);
+	void physics(float dTime);
 
 private:
 	TileMap* m_Map;

@@ -37,6 +37,14 @@ public:
 	void setMaxHp(float maxHp) { m_MaxHp = maxHp; }
 	void setHp(float hp) { m_Hp = hp; }
 
+	virtual void collision(float power);
+	virtual void collision(const cocos2d::Vector<Unit*>& units, float power);
+
+	cocos2d::Vec2 getForce() const { return m_Force; }
+	void setForce(cocos2d::Vec2 force) { m_Force = force; }
+
+	float getFriction() const { return m_Friction; }
+
 protected:
 
 	Direction m_Dir = Direction::DOWN;

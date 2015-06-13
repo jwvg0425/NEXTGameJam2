@@ -47,6 +47,9 @@ public:
 	void pull(float dTime);
 	void push(float dTime);
 
+	void collision(float power) override;
+	void collision(const cocos2d::Vector<Unit*>& units, float power) override;
+
 private:
 	State m_State;
 	ActType m_Type = NONE;

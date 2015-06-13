@@ -81,46 +81,15 @@ void Unit::force(float fx, float fy)
 
 void Unit::update(float dTime)
 {
-	Point pos(getPositionX() + m_Force.x*dTime, getPositionY() + m_Force.y*dTime);
-	
-	if (!moveCheck(pos))
-	{
-		setPosition(pos);
-	}
-	else
-	{
-		//부딪히면 데미지 입고 힘 0으로. 속도 10당 데미지 1.
-		m_Hp -= m_Force.getLength() / 10.0f;
-		m_Force.x = 0.0f;
-		m_Force.y = 0.0f;
-	}
-
-	//마찰력보다 작아지면 그냥 0
-	if (m_Force.x > m_Friction*dTime)
-	{
-		m_Force.x -= m_Friction *dTime;
-	}
-	else if (m_Force.x < -m_Friction*dTime)
-	{
-		m_Force.x += m_Friction*dTime;
-	}
-	else
-	{
-		m_Force.x = 0.0f;
-	}
-
-	if (m_Force.y > m_Friction*dTime)
-	{
-		m_Force.y -= m_Friction *dTime;
-	}
-	else if (m_Force.y < -m_Friction*dTime)
-	{
-		m_Force.y += m_Friction*dTime;
-	}
-	else
-	{
-		m_Force.y = 0.0f;
-	}
-
 	setZOrder(-getPositionY());
+}
+
+void Unit::collision(const cocos2d::Vector<Unit*>& units, float power)
+{
+
+}
+
+void Unit::collision(float power)
+{
+
 }

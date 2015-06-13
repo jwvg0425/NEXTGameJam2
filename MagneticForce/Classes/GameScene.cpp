@@ -31,6 +31,8 @@ bool GameScene::init()
 
 	addChild(m_UI, 1000);
 
+	scheduleUpdate();
+
     return true;
 }
 
@@ -128,7 +130,7 @@ bool GameScene::hitCheck(Unit* unit, cocos2d::Point pos)
 	return false;
 }
 
-void GameScene::hitCheck(std::function<bool(Unit*)> func, OUT cocos2d::Vector<Unit*>& units)
+void GameScene::conditionCheck(std::function<bool(Unit*)> func, OUT cocos2d::Vector<Unit*>& units)
 {
 	for (auto u : m_Units)
 	{
@@ -137,4 +139,90 @@ void GameScene::hitCheck(std::function<bool(Unit*)> func, OUT cocos2d::Vector<Un
 			units.pushBack(u);
 		}
 	}
+}
+
+void GameScene::physics(float dTime)
+{
+	//물리 계산
+	for (auto u : m_Units)
+	{
+		Point pos(u->getPositionX() + u->getForce().x*dTime, u->getPositionY() + u->getForce().y*dTime);
+		cocos2d::Vector<Unit*> units;
+
+		if (m_Map->isSolidTile(pos.x, pos.y, u->getMoveBox()))
+		{
+			//부딪히면 속도 0으로. 부딪혔음을 통보.
+			u->collision(u->getForce().getLength());
+			u->setForce({ 0.0f, 0.0f });
+		}
+		else
+		{
+			conditionCheck([pos, u](Unit* unit) -> bool
+			{
+				cocos2d::Rect moveBox = u->getMoveBox();
+				cocos2d::Rect realMoveA(pos.x + moveBox.origin.x, pos.y + moveBox.origin.y,
+					moveBox.size.width - moveBox.origin.x, moveBox.size.height - moveBox.origin.y);
+
+				if (u == unit)
+					return true;
+
+				moveBox = unit->getMoveBox();
+				cocos2d::Rect realMoveB(unit->getPositionX() + moveBox.origin.x, unit->getPositionY() + moveBox.origin.y,
+					moveBox.size.width - moveBox.origin.x, moveBox.size.height - moveBox.origin.y);
+
+				if (realMoveA.intersectsRect(realMoveB))
+				{
+					return true;
+				}
+
+				return false;
+			}, units);
+
+			if (units.size() > 1)
+			{
+				for (auto unit : units)
+				{
+					unit->collision(u->getForce().getLength());
+				}
+
+				u->setForce({ 0.0f, 0.0f });
+			}
+			else
+			{
+				u->setPosition(pos);
+			}
+		}
+		
+		//마찰력보다 작아지면 그냥 0
+		if (u->getForce().x > u->getFriction()*dTime)
+		{
+			u->setForce({ u->getForce().x - u->getFriction() *dTime, u->getForce().y });
+		}
+		else if (u->getForce().x < -u->getFriction()*dTime)
+		{
+			u->setForce({ u->getForce().x + u->getFriction()*dTime, u->getForce().y });
+		}
+		else
+		{
+			u->setForce({ 0.0f, u->getForce().y });
+		}
+
+		if (u->getForce().y > u->getFriction()*dTime)
+		{
+			u->setForce({u->getForce().x, u->getForce().y - u->getFriction() *dTime });
+		}
+		else if (u->getForce().y < -u->getFriction()*dTime)
+		{
+			u->setForce({ u->getForce().x, u->getForce().y + u->getFriction()*dTime });
+		}
+		else
+		{
+			u->setForce({ u->getForce().x, 0.0f });
+		}
+	}
+}
+
+void GameScene::update(float dTime)
+{
+	physics(dTime);
 }
