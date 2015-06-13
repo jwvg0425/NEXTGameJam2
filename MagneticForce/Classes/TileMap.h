@@ -9,9 +9,9 @@ public:
 	TileMap() = default;
 	~TileMap() override = default;
 
-	bool initWithFile(const std::string& fileName);
+	bool initWithFile(const std::string& fileName, cocos2d::Layer* layer);
 
-	static TileMap* createWithFile(const std::string& fileName);
+	static TileMap* createWithFile(const std::string& fileName, cocos2d::Layer* layer);
 
 	bool isSolidTile(int x, int y);
 	int getTile(int layer, int x, int y, int out = -1);

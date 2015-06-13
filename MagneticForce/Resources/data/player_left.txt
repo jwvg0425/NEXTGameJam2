@@ -1,5 +1,5 @@
 0.2
-player_left2.png 1
 player_left1.png 1
 player_left2.png 1
 player_left3.png 1
+player_left2.png 1

@@ -1,9 +1,10 @@
 ﻿#include "TileMap.h"
+#include "Unit.h"
 #include <fstream>
 
 USING_NS_CC;
 
-bool TileMap::initWithFile(const std::string& fileName)
+bool TileMap::initWithFile(const std::string& fileName, cocos2d::Layer* layer)
 {
 	if (!Node::init())
 	{
@@ -18,6 +19,7 @@ bool TileMap::initWithFile(const std::string& fileName)
 	}
 
 	bool defSection = true;
+	bool objSection = false;
 
 	while (!file.eof())
 	{
@@ -48,7 +50,7 @@ bool TileMap::initWithFile(const std::string& fileName)
 				defSection = false;
 			}
 		}
-		else
+		else if(!objSection)
 		{
 			for (int l = 0; l < m_Layer; l++)
 			{
@@ -60,6 +62,18 @@ bool TileMap::initWithFile(const std::string& fileName)
 					m_TileMap[l][i] = tileNum;
 				}
 			}
+			objSection = true;
+		}
+		else
+		{
+			std::string object;
+			int x, y;
+
+			file >> object >> x >> y;
+
+			auto unit = DataManager::getInstance()->getObject(object);
+			layer->addChild(unit);
+			unit->setPosition(x * 48 + 24, (m_Height - y) * 48 - 24);
 		}
 	}
 
@@ -105,10 +119,10 @@ bool TileMap::initWithFile(const std::string& fileName)
 					downleft->setAnchorPoint({ 0.0f, 1.0f });
 					downright->setAnchorPoint({ 0.0f, 1.0f });
 
-					upleft->setPosition(x * 48, (m_Height - y - 1) * 48);
-					upright->setPosition(x * 48 + 24, (m_Height - y - 1) * 48);
-					downleft->setPosition(x * 48, (m_Height - y - 1) * 48 - 24);
-					downright->setPosition(x * 48 + 24, (m_Height - y - 1) * 48 - 24);
+					upleft->setPosition(x * 48, (m_Height - y) * 48);
+					upright->setPosition(x * 48 + 24, (m_Height - y) * 48);
+					downleft->setPosition(x * 48, (m_Height - y) * 48 - 24);
+					downright->setPosition(x * 48 + 24, (m_Height - y) * 48 - 24);
 
 					addChild(upleft);
 					addChild(upright);
@@ -120,7 +134,7 @@ bool TileMap::initWithFile(const std::string& fileName)
 					auto sprite = DataManager::getInstance()->getSprite(m_Tiles[tile]);
 
 					sprite->setAnchorPoint({ 0.0f, 1.0f });
-					sprite->setPosition(x * 48, (m_Height - y - 1) * 48);
+					sprite->setPosition(x * 48, (m_Height - y) * 48);
 
 					addChild(sprite);
 				}
@@ -131,11 +145,11 @@ bool TileMap::initWithFile(const std::string& fileName)
 	return true;
 }
 
-TileMap* TileMap::createWithFile(const std::string& fileName)
+TileMap* TileMap::createWithFile(const std::string& fileName, cocos2d::Layer* layer)
 {
 	TileMap* ret = new TileMap();
 	
-	if (ret != nullptr && ret->initWithFile(fileName))
+	if (ret != nullptr && ret->initWithFile(fileName, layer))
 	{
 		ret->autorelease();
 

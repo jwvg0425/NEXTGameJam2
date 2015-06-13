@@ -19,10 +19,13 @@ bool GameScene::init()
     {
         return false;
     }
-	auto map = TileMap::createWithFile("map");
+	
+	m_Map = TileMap::createWithFile("map", this);
+	m_Map->setAnchorPoint({ 0.0f, 0.0f });
 
-	addChild(map);
+	addChild(m_Map, -1);
 
+	/*
 	auto sprite = Sprite::create();
 	auto ani = DataManager::getInstance()->getAnimation("player_down");
 	auto animate = Animate::create(ani);
@@ -32,6 +35,7 @@ bool GameScene::init()
 	sprite->setPosition(100, 100);
 
 	addChild(sprite);
+	*/
 
     return true;
 }

@@ -1,4 +1,5 @@
 ﻿#include "DataManager.h"
+#include "Player.h"
 #include <fstream>
 
 USING_NS_CC;
@@ -95,4 +96,13 @@ void DataManager::initTile()
 int DataManager::getTileProperty(const std::string& tileName)
 {
 	return m_TileProperties[tileName];
+}
+
+Unit* DataManager::getObject(const std::string& objName)
+{
+	if (objName == "player")
+	{
+		return Player::create();
+	}
+	return nullptr;
 }

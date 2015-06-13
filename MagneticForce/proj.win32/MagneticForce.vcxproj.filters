@@ -30,6 +30,12 @@
     <ClCompile Include="..\Classes\TileMap.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Unit.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Player.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -45,6 +51,12 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\TileMap.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Unit.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Player.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>

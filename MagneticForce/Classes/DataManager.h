@@ -26,6 +26,8 @@ enum TileProperty
 	TILE = 0x2, //TILE 속성이 없으면 1칸에 1개 블록 다 들어감
 };
 
+class Unit;
+
 class DataManager
 {
 public:
@@ -35,6 +37,7 @@ public:
 	cocos2d::Sprite*	getSprite(const std::string& fileName);
 	void				initTile();
 	int					getTileProperty(const std::string& tileName);
+	Unit*				getObject(const std::string& objName);
 
 private:
 	DataManager();
