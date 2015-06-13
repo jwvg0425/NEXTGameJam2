@@ -1,0 +1,6 @@
+cave_wall 3
+stone 0
+cave_wall_front0 1
+cave_wall_front1 1
+cave_wall_front2 1
+cave_wall_front3 1

@@ -66,10 +66,10 @@
     <Text Include="..\Resources\data\player_left.txt">
       <Filter>resource\data</Filter>
     </Text>
-    <Text Include="..\Resources\data\cave_wall.txt">
+    <Text Include="..\Resources\data\map.txt">
       <Filter>resource\data</Filter>
     </Text>
-    <Text Include="..\Resources\data\map.txt">
+    <Text Include="..\Resources\data\tile.txt">
       <Filter>resource\data</Filter>
     </Text>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #include "GameScene.h"
-#include "DataManager.h"
+#include "TileMap.h"
 
 USING_NS_CC;
 
@@ -19,6 +19,9 @@ bool GameScene::init()
     {
         return false;
     }
+	auto map = TileMap::createWithFile("map");
+
+	addChild(map);
 
 	auto sprite = Sprite::create();
 	auto ani = DataManager::getInstance()->getAnimation("player_down");

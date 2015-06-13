@@ -12,7 +12,7 @@ DataManager* DataManager::getInstance()
 
 DataManager::DataManager()
 {
-
+	initTile();
 }
 
 DataManager::~DataManager()
@@ -58,4 +58,41 @@ cocos2d::Animation* DataManager::getAnimation(const std::string& fileName)
 	m_Animations.insert(fileName, animation);
 
 	return animation;
+}
+
+cocos2d::Sprite* DataManager::getTile(const std::string& fileName, TileType type)
+{
+	return getSprite(fileName + std::to_string(static_cast<int>(type)));
+}
+
+cocos2d::Sprite* DataManager::getSprite(const std::string& fileName)
+{
+	return Sprite::create("graphics/" + fileName + ".png");
+
+}
+
+void DataManager::initTile()
+{
+	std::ifstream file("data/tile.txt");
+
+	if (!file.is_open())
+	{
+		CCLOG("tile.txt file is not existed.");
+		return;
+	}
+
+	while (!file.eof())
+	{
+		std::string tile;
+		int property;
+
+		file >> tile >> property;
+
+		m_TileProperties[tile] = property;
+	}
+}
+
+int DataManager::getTileProperty(const std::string& tileName)
+{
+	return m_TileProperties[tileName];
 }

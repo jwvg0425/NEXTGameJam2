@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 #include <array>
 
-enum class Tile
+enum class TileType
 {
 	CENTER = 0,
 	UP = 1,
@@ -13,10 +13,17 @@ enum class Tile
 	UPRIGHT = 6,
 	DOWNRIGHT = 7,
 	DOWNLEFT = 8,
-	UPLEFT_CONRNER = 9,
+	UPLEFT_CORNER = 9,
 	UPRIGHT_CORNER = 10,
 	DOWNRIGHT_CORNER = 11,
 	DOWNLEFT_CORNER = 12
+};
+
+enum TileProperty
+{
+	NONE = 0x0,
+	SOLID = 0x1,
+	TILE = 0x2, //TILE 속성이 없으면 1칸에 1개 블록 다 들어감
 };
 
 class DataManager
@@ -24,11 +31,15 @@ class DataManager
 public:
 	static DataManager* getInstance();
 	cocos2d::Animation* getAnimation(const std::string& fileName);
+	cocos2d::Sprite*	getTile(const std::string& fileName, TileType type);
+	cocos2d::Sprite*	getSprite(const std::string& fileName);
+	void				initTile();
+	int					getTileProperty(const std::string& tileName);
 
 private:
 	DataManager();
 	~DataManager();
 
 	cocos2d::Map<std::string, cocos2d::Animation*> m_Animations;
-	cocos2d::Map<std::string, cocos2d::Sprite*> m_Tiles;
+	std::map<std::string, int> m_TileProperties;
 };

@@ -164,12 +164,12 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Resources\data\cave_wall.txt" />
     <Text Include="..\Resources\data\map.txt" />
     <Text Include="..\Resources\data\player_down.txt" />
     <Text Include="..\Resources\data\player_left.txt" />
     <Text Include="..\Resources\data\player_right.txt" />
     <Text Include="..\Resources\data\player_up.txt" />
+    <Text Include="..\Resources\data\tile.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
