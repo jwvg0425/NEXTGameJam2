@@ -24,6 +24,8 @@ bool Player::init()
 
 	m_MoveBox = cocos2d::Rect(-14, -18, 7, -11);
 	m_HitBox = cocos2d::Rect(-14, -18, 7, 14);
+	//dash 0.5초
+	m_Friction = m_Dash * 2;
 
 	DataManager::getInstance()->initPlayer(this);
 
@@ -32,32 +34,101 @@ bool Player::init()
 
 void Player::setState(State state)
 {
+	switch (state)
+	{
+	case IDLE:
+		switch (m_Dir)
+		{
+		case Direction::UP:
+			changeSprite("player_up2", false);
+			break;
+		case Direction::RIGHT:
+			changeSprite("player_right2", false);
+			break;
+		case Direction::DOWN:
+			changeSprite("player_down2", false);
+			break;
+		case Direction::LEFT:
+			changeSprite("player_left2", false);
+			break;
+		}
+		break;
+	case MOVE:
+		switch (m_Dir)
+		{
+		case Direction::UP:
+			changeSprite("player_up", true);
+			break;
+		case Direction::RIGHT:
+			changeSprite("player_right", true);
+			break;
+		case Direction::DOWN:
+			changeSprite("player_down", true);
+			break;
+		case Direction::LEFT:
+			changeSprite("player_left", true);
+			break;
+		}
+		break;
+	}
 	m_State = state;
 }
 
 void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* e)
 {
+	//힘이 가해지고 있는 중에는 아무 동작 못함. 적당히 0.5f정도로.
+
+	if (m_Force.x > 0.5f || m_Force.x < -0.5f ||
+		m_Force.y > 0.5f || m_Force.y < -0.5f)
+	{
+		return;
+	}
+
 	switch(keyCode)
 	{
 	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		changeDirection(Direction::LEFT);
 		m_ArrowPressed |= static_cast<int>(Direction::LEFT);
+		setState(MOVE);
 		break;
 	case EventKeyboard::KeyCode::KEY_UP_ARROW:
 		changeDirection(Direction::UP);
 		m_ArrowPressed |= static_cast<int>(Direction::UP);
+		setState(MOVE);
 		break;
 	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		changeDirection(Direction::RIGHT);
 		m_ArrowPressed |= static_cast<int>(Direction::RIGHT);
+		setState(MOVE);
 		break;
 	case EventKeyboard::KeyCode::KEY_DOWN_ARROW:
 		changeDirection(Direction::DOWN);
 		m_ArrowPressed |= static_cast<int>(Direction::DOWN);
+		setState(MOVE);
+		break;
+	case EventKeyboard::KeyCode::KEY_SHIFT:
+		if (m_Dir == Direction::DOWN)
+		{
+			force(0, -m_Dash);
+		}
+		else if (m_Dir == Direction::UP)
+		{
+			force(0, m_Dash);
+		}
+		else if (m_Dir == Direction::LEFT)
+		{
+			force(-m_Dash, 0);
+		}
+		else
+		{
+			force(m_Dash, 0);
+		}
+		m_ArrowPressed = 0;
+		setState(IDLE);
 		break;
 	}
 
-	setState(MOVE);
+	
 }
 
 void Player::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Event* e)
@@ -80,21 +151,6 @@ void Player::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Eve
 
 	if (m_ArrowPressed == 0)
 	{
-		switch (m_Dir)
-		{
-		case Direction::UP:
-			changeSprite("player_up2", false);
-			break;
-		case Direction::RIGHT:
-			changeSprite("player_right2", false);
-			break;
-		case Direction::DOWN:
-			changeSprite("player_down2", false);
-			break;
-		case Direction::LEFT:
-			changeSprite("player_left2", false);
-			break;
-		}
 		setState(IDLE);
 	}
 	else
@@ -121,25 +177,10 @@ void Player::onKeyReleased(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Eve
 
 void Player::changeDirection(Direction dir)
 {
-	if (m_State == IDLE || m_Dir != dir)
+	if (m_State == MOVE || m_Dir != dir)
 	{
-		switch (dir)
-		{
-		case Direction::UP:
-			changeSprite("player_up", true);
-			break;
-		case Direction::RIGHT:
-			changeSprite("player_right", true);
-			break;
-		case Direction::DOWN:
-			changeSprite("player_down", true);
-			break;
-		case Direction::LEFT:
-			changeSprite("player_left", true);
-			break;
-		}
+		setState(MOVE);
 	}
-
 	Unit::changeDirection(dir);
 }
 

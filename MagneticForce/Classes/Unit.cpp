@@ -65,14 +65,25 @@ void Unit::force(float fx, float fy)
 
 void Unit::update(float dTime)
 {
-	//0.5f보다 작아지면 그냥 0
-	setPosition(getPositionX() + m_Force.x, getPositionY() + m_Force.y);
+	Point pos(getPositionX() + m_Force.x*dTime, getPositionY() + m_Force.y*dTime);
+	
+	if (!moveCheck(pos))
+	{
+		setPosition(pos);
+	}
+	else
+	{
+		//부딪히면 힘 0으로. 나중엔 hp 달게끔
+		m_Force.x = 0.0f;
+		m_Force.y = 0.0f;
+	}
 
-	if (m_Force.x > 0.5f)
+	//마찰력보다 작아지면 그냥 0
+	if (m_Force.x > m_Friction*dTime)
 	{
 		m_Force.x -= m_Friction *dTime;
 	}
-	else if (m_Force.x < -0.5f)
+	else if (m_Force.x < -m_Friction*dTime)
 	{
 		m_Force.x += m_Friction*dTime;
 	}
@@ -81,11 +92,11 @@ void Unit::update(float dTime)
 		m_Force.x = 0.0f;
 	}
 
-	if (m_Force.y > 0.5f)
+	if (m_Force.y > m_Friction*dTime)
 	{
 		m_Force.y -= m_Friction *dTime;
 	}
-	else if (m_Force.y < -0.5f)
+	else if (m_Force.y < -m_Friction*dTime)
 	{
 		m_Force.y += m_Friction*dTime;
 	}
