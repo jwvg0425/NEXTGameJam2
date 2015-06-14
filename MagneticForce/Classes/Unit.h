@@ -3,6 +3,7 @@
 
 enum class Direction
 {
+	NONE = 0x0,
 	LEFT = 0x1,
 	UP = 0x2,
 	RIGHT = 0x4,

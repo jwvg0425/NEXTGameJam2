@@ -39,7 +39,6 @@ size 2 20 15
  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
 
 player 9 12
-skeleton 9 9
 box 8 5
 box 8 6
 box 8 7

@@ -189,6 +189,14 @@ void Player::changeDirection(Direction dir)
 
 void Player::update(float dTime)
 {
+	//사망시 젤 처음부터 다시 시작
+	if (m_Status->m_Hp < 0.0f)
+	{
+		m_Status->init();
+		Director::getInstance()->replaceScene(GameScene::createScene("stage1"));
+		return;
+	}
+	
 	//기본 update
 	Unit::update(dTime);
 

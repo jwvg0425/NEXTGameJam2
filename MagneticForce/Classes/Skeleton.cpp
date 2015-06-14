@@ -18,6 +18,7 @@ bool Skeleton::init()
 	m_MoveBox = { -13, -13, 13, -7 };
 	m_HitBox = { -13, -13, 13, 13 };
 	m_Friction = 100.0f;
+	m_Dir = Direction::NONE;
 
 	scheduleUpdate();
 
@@ -163,6 +164,14 @@ void Skeleton::invincible(float time)
 
 void Skeleton::die()
 {
+	//스탯 상승
+	DataManager::getInstance()->getStatus()->m_MaxHp += 5.0f;
+	DataManager::getInstance()->getStatus()->m_Hp += 5.0f;
+	DataManager::getInstance()->getStatus()->m_MaxMp += 5.0f;
+	DataManager::getInstance()->getStatus()->m_Mp += 5.0f;
+	DataManager::getInstance()->getStatus()->m_Speed += 20.0f;
+	DataManager::getInstance()->getStatus()->m_PullPower += 1000.0f;
+	DataManager::getInstance()->getStatus()->m_PushPower += 800.0f;
 	DataManager::getInstance()->getNowScene()->removeUnit(this);
 	removeFromParent();
 }

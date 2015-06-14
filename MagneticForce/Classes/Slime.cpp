@@ -116,6 +116,13 @@ void Slime::invincible(float time)
 
 void Slime::die()
 {
+	//스탯 상승
+	DataManager::getInstance()->getStatus()->m_MaxHp += 10.0f;
+	DataManager::getInstance()->getStatus()->m_Hp += 10.0f;
+	DataManager::getInstance()->getStatus()->m_MaxMp += 3.0f;
+	DataManager::getInstance()->getStatus()->m_Mp += 3.0f;
+	DataManager::getInstance()->getStatus()->m_PullPower += 500.0f;
+	DataManager::getInstance()->getStatus()->m_PushPower += 300.0f;
 	DataManager::getInstance()->getNowScene()->removeUnit(this);
 	removeFromParent();
 }

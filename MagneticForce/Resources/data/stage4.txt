@@ -41,4 +41,13 @@ size 2 20 15
  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2
  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2  2
 
- player 10 12
+tiger 10 5
+box 4 3
+box 8 3
+box 12 3
+box 16 3
+box 4 8
+box 8 8
+box 12 8
+box 16 8
+player 10 12

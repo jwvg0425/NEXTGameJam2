@@ -31,6 +31,8 @@ public:
 
 	void removeUnit(Unit* unit);
 
+	int getUnitNum() const { return m_Units.size(); }
+
 private:
 	TileMap* m_Map;
 	cocos2d::Vector<Unit*> m_Units;

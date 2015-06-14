@@ -61,3 +61,16 @@ size 3 40 15
 player 6 12
 portal 28 0
 portal 29 0
+slime 6 6
+slime 7 3
+slime 19 3
+slime 28 8
+box 19 4
+box 7 4
+box 3 5
+box 27 8
+box 29 9
+skeleton 2 5
+skeleton 18 4
+skeleton 31 7
+skeleton 27 9

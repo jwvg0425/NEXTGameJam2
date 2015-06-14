@@ -3,17 +3,35 @@
 
 struct PlayerStatus
 {
-	float m_Speed = 200.0f;
-	float m_MaxMp = 100.0f;
-	float m_Mp = 100.0f;
-	float m_PullPower = 20000.0f;
-	float m_Hp = 100.0f;
-	float m_MaxHp = 100.0f;
-	float m_PushPower = 15000.0f;
-	bool m_EnablePush = true;
-	bool m_EnablePull = true;
-	bool m_EnablePullCry = true;
-	bool m_EnablePushCry = true;
+	PlayerStatus(){ init(); }
+	~PlayerStatus() = default;
+
+	float m_Speed;
+	float m_MaxMp;
+	float m_Mp;
+	float m_PullPower;
+	float m_Hp;
+	float m_MaxHp;
+	float m_PushPower;
+	bool m_EnablePush;
+	bool m_EnablePull;
+	bool m_EnablePullCry;
+	bool m_EnablePushCry;
+
+	void init()
+	{
+		m_Speed = 200.0f;
+		m_MaxMp = 100.0f;
+		m_Mp = 100.0f;
+		m_PullPower = 20000.0f;
+		m_Hp = 100.0f;
+		m_MaxHp = 100.0f;
+		m_PushPower = 15000.0f;
+		m_EnablePush = true;
+		m_EnablePull = true;
+		m_EnablePullCry = true;
+		m_EnablePushCry = true;
+	}
 };
 
 class Player : public Unit

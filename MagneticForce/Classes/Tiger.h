@@ -18,11 +18,31 @@ public:
 	void invincible(float time);
 	void die();
 
+	void stop(float dTime);
+	void move(float dTime);
+	void summon(float dTime);
+	
+	void changeDirection(Direction dir) override;
+
+	void force(float fx, float fy) override;
+
 	CREATE_FUNC(Tiger);
 
 private:
-	float m_Hp = 20.0f;
+	enum State
+	{
+		STOP,
+		MOVE,
+		SUMMON,
+	};
+
+	State m_State = STOP;
+
+	float m_Time = 0.0f;
+	float m_Hp = 200.0f;
+	bool m_IsSummon = false;
 	bool m_Invincible = false;
 	bool m_IsDie = false;
 	bool m_IsFocus = false;
+	cocos2d::Point m_Dest;
 };

@@ -24,6 +24,7 @@ bool GameScene::init(const std::string& fileName)
         return false;
     }
 
+	DataManager::getInstance()->playBackgroundMusic("cave", true);
 	DataManager::getInstance()->setNowScene(this);
 	m_Name = fileName;
 	
@@ -33,9 +34,6 @@ bool GameScene::init(const std::string& fileName)
 	addChild(m_Map, -100000);
 
 	scheduleUpdate();
-	
-
-	DataManager::getInstance()->playBackgroundMusic("cave", true);
 
     return true;
 }
