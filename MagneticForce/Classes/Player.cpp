@@ -22,8 +22,8 @@ bool Player::init()
 
 	scheduleUpdate();
 
-	m_MoveBox = cocos2d::Rect(-14, -18, 7, -11);
-	m_HitBox = cocos2d::Rect(-14, -18, 7, 14);
+	m_MoveBox = cocos2d::Rect(-6, -18, 7, -11);
+	m_HitBox = cocos2d::Rect(-6, -18, 7, 14);
 	//dash 0.5초
 	m_Friction = m_Dash * 2.5;
 
@@ -74,16 +74,16 @@ void Player::setState(State state)
 		switch (m_Dir)
 		{
 		case Direction::UP:
-			changeSprite("player_up2", false);
+			changeSprite("player_act_up", true);
 			break;
 		case Direction::RIGHT:
-			changeSprite("player_right2", false);
+			changeSprite("player_act_right", true);
 			break;
 		case Direction::DOWN:
-			changeSprite("player_down2", false);
+			changeSprite("player_act_down", true);
 			break;
 		case Direction::LEFT:
-			changeSprite("player_left2", false);
+			changeSprite("player_act_left", true);
 			break;
 		}
 		break;
