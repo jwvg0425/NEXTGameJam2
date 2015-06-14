@@ -3,6 +3,7 @@
 #include "AppDelegate.h"
 #include "UILayer.h"
 #include "DataManager.h"
+#include "Player.h"
 
 USING_NS_CC;
 
@@ -288,8 +289,10 @@ void GameScene::removeAllUnits()
 {
 	for (auto u : m_Units)
 	{
-		u->removeFromParent();
+		if(u != DataManager::getInstance()->getPlayer())
+			u->removeFromParent();
 	}
 
 	m_Units.clear();
+	m_Units.pushBack(DataManager::getInstance()->getPlayer());
 }
