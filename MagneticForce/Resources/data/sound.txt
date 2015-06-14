@@ -1,2 +1,3 @@
 effect pull_push.wav
 effect player_hurt.wav
+background cave.wav

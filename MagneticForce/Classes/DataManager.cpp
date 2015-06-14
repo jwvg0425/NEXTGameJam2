@@ -151,3 +151,8 @@ int DataManager::playEffect(const std::string& name)
 {
 	return SimpleAudioEngine::getInstance()->playEffect(("sound/" + name + ".wav").c_str());
 }
+
+void DataManager::playBackgroundMusic(const std::string& name, bool loop)
+{
+	SimpleAudioEngine::getInstance()->playBackgroundMusic(("sound/" + name + ".wav").c_str(), loop);
+}

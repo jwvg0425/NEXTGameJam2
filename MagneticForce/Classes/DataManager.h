@@ -45,6 +45,7 @@ public:
 	Player*				getPlayer() const { return m_Player; }
 
 	int					playEffect(const std::string& name);
+	void				playBackgroundMusic(const std::string& name, bool loop);
 
 private:
 	DataManager();

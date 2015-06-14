@@ -2,6 +2,7 @@
 #include "TileMap.h"
 #include "AppDelegate.h"
 #include "UILayer.h"
+#include "DataManager.h"
 
 USING_NS_CC;
 
@@ -32,6 +33,8 @@ bool GameScene::init(const std::string& fileName)
 	addChild(m_UI, 1000);
 
 	scheduleUpdate();
+
+	DataManager::getInstance()->playBackgroundMusic("cave", true);
 
     return true;
 }
