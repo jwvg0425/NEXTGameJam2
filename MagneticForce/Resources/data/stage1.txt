@@ -43,6 +43,4 @@ box 8 5
 box 8 6
 box 8 7
 box 8 8
-slime 8 9
 portal 8 0
-thorn 8 10

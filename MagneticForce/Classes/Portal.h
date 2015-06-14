@@ -7,9 +7,9 @@ public:
 	Portal() = default;
 	~Portal() override = default;
 
-	bool init(const std::string& nextStage);
+	bool init(const std::string& nowStage);
 
-	static Portal* create(const std::string& nextStage);
+	static Portal* create(const std::string& nowStage);
 
 	void update(float dTime);
 	

@@ -1,4 +1,6 @@
 ﻿#include "slime.h"
+#include "DataManager.h"
+#include "GameScene.h"
 #include "Effect.h"
 
 USING_NS_CC;
@@ -74,5 +76,6 @@ void Slime::invincible(float time)
 
 void Slime::die()
 {
+	DataManager::getInstance()->getNowScene()->removeUnit(this);
 	removeFromParent();
 }

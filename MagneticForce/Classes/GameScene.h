@@ -29,6 +29,8 @@ public:
 
 	const std::string& getMapName() const { return m_Name; }
 
+	void removeUnit(Unit* unit);
+
 private:
 	TileMap* m_Map;
 	cocos2d::Vector<Unit*> m_Units;

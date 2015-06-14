@@ -5,25 +5,27 @@
 
 USING_NS_CC;
 
-bool Portal::init(const std::string& nextStage)
+bool Portal::init(const std::string& nowStage)
 {
 	if (!Unit::init())
 	{
 		return false;
 	}
 
-	m_NextStage = nextStage;
+	m_NextStage = DataManager::getInstance()->getNextStage(nowStage);
+	m_IsStatic = true;
+	m_IsSolid = false;
 
 	scheduleUpdate();
 
 	return true;
 }
 
-Portal* Portal::create(const std::string& nextStage)
+Portal* Portal::create(const std::string& nowStage)
 {
 	Portal* ret = new Portal();
 
-	if (ret != nullptr && ret->init(nextStage))
+	if (ret != nullptr && ret->init(nowStage))
 	{
 		ret->autorelease();
 

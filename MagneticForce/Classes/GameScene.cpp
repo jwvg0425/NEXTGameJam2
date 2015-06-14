@@ -269,3 +269,11 @@ GameScene* GameScene::create(const std::string& fileName)
 		return ret;
 	}
 }
+
+void GameScene::removeUnit(Unit* unit)
+{
+	auto it = m_Units.find(unit);
+
+	if (it != m_Units.end())
+		m_Units.erase(it);
+}
