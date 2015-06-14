@@ -351,7 +351,7 @@ void Player::pull(float dTime)
 			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
 				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
 
-			auto yCut = myPos.y + 24.0f;
+			auto yCut = myPos.y + 16.0f;
 
 			if (((realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f) ||
 				(realHit.origin.x + hitBox.size.width < myPos.x + 24.0f && realHit.origin.x + hitBox.size.width > myPos.x - 24.0f)) &&
@@ -454,7 +454,7 @@ void Player::push(float dTime)
 			cocos2d::Rect realHit(pos.x + hitBox.origin.x, pos.y + hitBox.origin.y,
 				hitBox.size.width - hitBox.origin.x, hitBox.size.height - hitBox.origin.y);
 
-			auto yCut = myPos.y + 24.0f;
+			auto yCut = myPos.y + 16.0f;
 
 			if (((realHit.origin.x < myPos.x + 24.0f && realHit.origin.x > myPos.x - 24.0f) ||
 				(realHit.origin.x + hitBox.size.width < myPos.x + 24.0f && realHit.origin.x + hitBox.size.width > myPos.x - 24.0f)) &&
