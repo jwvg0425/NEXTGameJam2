@@ -69,4 +69,5 @@ private:
 	float m_PullPower = 20000.0f;
 	bool m_EnablePush = true;
 	bool m_EnablePull = true;
+	unsigned int m_Drone = 0;
 };

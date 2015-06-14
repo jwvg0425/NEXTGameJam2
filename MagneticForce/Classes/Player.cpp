@@ -74,8 +74,22 @@ void Player::setState(State state)
 	case ACT:
 		DataManager::getInstance()->playEffect("pull_push");
 		changeSpriteByType(m_Type);
+		if (m_Drone == 0)
+		{
+			m_Drone = DataManager::getInstance()->playEffect("drone", true);
+		}
+		else
+		{
+			DataManager::getInstance()->resumeEffect(m_Drone);
+		}
 		break;
 	}
+
+	if (state != ACT && m_Drone != 0)
+	{
+		DataManager::getInstance()->pauseEffect(m_Drone);
+	}
+	
 	m_State = state;
 }
 

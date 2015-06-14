@@ -147,12 +147,27 @@ void DataManager::initSound()
 	}
 }
 
-int DataManager::playEffect(const std::string& name)
+int DataManager::playEffect(const std::string& name, bool loop)
 {
-	return SimpleAudioEngine::getInstance()->playEffect(("sound/" + name + ".wav").c_str());
+	return SimpleAudioEngine::getInstance()->playEffect(("sound/" + name + ".wav").c_str(), loop);
 }
 
 void DataManager::playBackgroundMusic(const std::string& name, bool loop)
 {
 	SimpleAudioEngine::getInstance()->playBackgroundMusic(("sound/" + name + ".wav").c_str(), loop);
+}
+
+void DataManager::resumeEffect(int id)
+{
+	SimpleAudioEngine::getInstance()->resumeEffect(id);
+}
+
+void DataManager::stopEffect(int id)
+{
+	SimpleAudioEngine::getInstance()->stopEffect(id);
+}
+
+void DataManager::pauseEffect(int id)
+{
+	SimpleAudioEngine::getInstance()->pauseEffect(id);
 }

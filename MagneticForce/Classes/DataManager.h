@@ -45,8 +45,11 @@ public:
 	void				initPlayer(Player* player) { m_Player = player; }
 	Player*				getPlayer() const { return m_Player; }
 
-	int					playEffect(const std::string& name);
-	void				playBackgroundMusic(const std::string& name, bool loop);
+	int					playEffect(const std::string& name, bool loop = false);
+	void				resumeEffect(int id);
+	void				pauseEffect(int id);
+	void				stopEffect(int id);
+	void				playBackgroundMusic(const std::string& name, bool loop = false);
 	GameScene*			getNowScene() const { return m_NowScene; }
 	void				setNowScene(GameScene* scene) { m_NowScene = scene; }
 
