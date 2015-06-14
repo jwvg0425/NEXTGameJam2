@@ -5,3 +5,11 @@ cave_wall_front1 1
 cave_wall_front2 1
 cave_wall_front3 1
 grass 0
+wood 3
+sand 2
+wood_front1 1
+wood_front2 1
+wood_front3 1
+wood_middle1 1
+wood_middle1 1
+wood_middle1 1
