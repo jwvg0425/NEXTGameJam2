@@ -182,6 +182,10 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
   <ItemGroup>
     <Text Include="..\Resources\data\collision_effect.txt" />
     <Text Include="..\Resources\data\portal.txt" />
+    <Text Include="..\Resources\data\skeleton_down.txt" />
+    <Text Include="..\Resources\data\skeleton_left.txt" />
+    <Text Include="..\Resources\data\skeleton_right.txt" />
+    <Text Include="..\Resources\data\skeleton_up.txt" />
     <Text Include="..\Resources\data\sound.txt" />
     <Text Include="..\Resources\data\stage1.txt" />
     <Text Include="..\Resources\data\player_act_pull_down.txt" />
@@ -199,6 +203,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <Text Include="..\Resources\data\stage2.txt" />
     <Text Include="..\Resources\data\slime.txt" />
     <Text Include="..\Resources\data\stage3.txt" />
+    <Text Include="..\Resources\data\stage4.txt" />
     <Text Include="..\Resources\data\tile.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

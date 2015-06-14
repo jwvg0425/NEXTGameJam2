@@ -1,0 +1,5 @@
+0.2
+skeleton_left1.png 1
+skeleton_left2.png 1
+skeleton_left3.png 1
+skeleton_left2.png 1

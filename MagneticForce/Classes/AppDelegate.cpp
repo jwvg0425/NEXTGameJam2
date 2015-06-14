@@ -13,28 +13,28 @@ AppDelegate::~AppDelegate()
 
 bool AppDelegate::applicationDidFinishLaunching() 
 {
-    auto director = Director::getInstance();
-    auto glview = director->getOpenGLView();
-    if(!glview) {
+	auto director = Director::getInstance();
+	auto glview = director->getOpenGLView();
+	if(!glview) {
 		glview = GLView::createWithRect("Magnetic Force", cocos2d::Rect(300, 300, WIDTH, HEIGHT));
-        director->setOpenGLView(glview);
-    }
+		director->setOpenGLView(glview);
+	}
 
-    director->setDisplayStats(false);
-    director->setAnimationInterval(1.0 / 60);
+	director->setDisplayStats(false);
+	director->setAnimationInterval(1.0 / 60);
 
-    auto scene = GameScene::createScene("stage1");
-    director->runWithScene(scene);
+	auto scene = GameScene::createScene("stage1");
+	director->runWithScene(scene);
 
-    return true;
+	return true;
 }
 
 void AppDelegate::applicationDidEnterBackground() 
 {
-    Director::getInstance()->stopAnimation();
+	Director::getInstance()->stopAnimation();
 }
 
 void AppDelegate::applicationWillEnterForeground() 
 {
-    Director::getInstance()->startAnimation();
+	Director::getInstance()->startAnimation();
 }

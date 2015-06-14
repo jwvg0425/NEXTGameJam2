@@ -171,5 +171,20 @@
     <Text Include="..\Resources\data\stage3.txt">
       <Filter>resource\data\stage</Filter>
     </Text>
+    <Text Include="..\Resources\data\stage4.txt">
+      <Filter>resource\data\stage</Filter>
+    </Text>
+    <Text Include="..\Resources\data\skeleton_up.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\skeleton_left.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\skeleton_right.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\skeleton_down.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
   </ItemGroup>
 </Project>
