@@ -30,6 +30,7 @@ public:
 	const std::string& getMapName() const { return m_Name; }
 
 	void removeUnit(Unit* unit);
+	void removeAllUnits();
 
 	int getUnitNum() const { return m_Units.size(); }
 

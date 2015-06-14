@@ -18,6 +18,8 @@ public:
 	void invincible(float time);
 	void die();
 
+	void setFocus(){ m_IsFocus = true; }
+
 	CREATE_FUNC(Slime);
 
 private:

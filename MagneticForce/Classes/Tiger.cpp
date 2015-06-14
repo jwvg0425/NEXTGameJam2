@@ -94,6 +94,11 @@ void Tiger::hurt(float hp)
 	});
 
 	m_Hp -= hp;
+
+	if (m_Hp <= 0.0f)
+	{
+		m_IsDie = true;
+	}
 }
 
 void Tiger::invincible(float time)
@@ -193,6 +198,7 @@ void Tiger::summon(float dTime)
 
 				do
 				{
+					units.clear();
 					pos.x = 192 + rand() % (768 - 192);
 					pos.y = 144 + rand() % (576 - 144);
 					scene->conditionCheck([pos](Unit* unit) -> bool
@@ -215,6 +221,7 @@ void Tiger::summon(float dTime)
 				} while (units.size() != 0);
 
 				slime->setPosition(pos);
+				slime->setFocus();
 				scene->addUnit(slime);
 			}
 		}
@@ -226,6 +233,7 @@ void Tiger::summon(float dTime)
 
 			do
 			{
+				units.clear();
 				pos.x = 192 + rand() % (768 - 192);
 				pos.y = 144 + rand() % (576 - 144);
 				scene->conditionCheck([pos](Unit* unit) -> bool
@@ -248,6 +256,7 @@ void Tiger::summon(float dTime)
 			} while (units.size() != 0);
 
 			skeleton->setPosition(pos);
+			skeleton->setFocus();
 			scene->addUnit(skeleton);
 		}
 

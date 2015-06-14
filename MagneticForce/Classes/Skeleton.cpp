@@ -173,7 +173,6 @@ void Skeleton::die()
 	DataManager::getInstance()->getStatus()->m_PullPower += 1000.0f;
 	DataManager::getInstance()->getStatus()->m_PushPower += 800.0f;
 	DataManager::getInstance()->getNowScene()->removeUnit(this);
-	removeFromParent();
 }
 
 void Skeleton::force(float fx, float fy)

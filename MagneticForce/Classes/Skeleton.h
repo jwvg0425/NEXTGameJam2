@@ -19,6 +19,7 @@ public:
 	void die();
 	void force(float fx, float fy) override;
 	void changeDirection(Direction dir) override;
+	void setFocus(){ m_IsFocus = true; }
 
 	CREATE_FUNC(Skeleton);
 

@@ -280,4 +280,16 @@ void GameScene::removeUnit(Unit* unit)
 
 	if (it != m_Units.end())
 		m_Units.erase(it);
+
+	unit->removeFromParent();
+}
+
+void GameScene::removeAllUnits()
+{
+	for (auto u : m_Units)
+	{
+		u->removeFromParent();
+	}
+
+	m_Units.clear();
 }

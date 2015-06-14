@@ -226,3 +226,4 @@ std::string DataManager::getNextStage(const std::string& portal)
 {
 	return m_Portals[portal];
 }
+

@@ -124,5 +124,4 @@ void Slime::die()
 	DataManager::getInstance()->getStatus()->m_PullPower += 500.0f;
 	DataManager::getInstance()->getStatus()->m_PushPower += 300.0f;
 	DataManager::getInstance()->getNowScene()->removeUnit(this);
-	removeFromParent();
 }
