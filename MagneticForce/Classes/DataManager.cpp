@@ -5,6 +5,7 @@
 #include "SimpleAudioEngine.h" 
 #include "Portal.h"
 #include "GameScene.h"
+#include "Thorn.h"
 
 using namespace CocosDenshion;
 
@@ -123,6 +124,10 @@ Unit* DataManager::getObject(const std::string& objName)
 	else if (objName == "portal")
 	{
 		return Portal::create(m_NowScene->getMapName());
+	}
+	else if (objName == "thorn")
+	{
+		return Thorn::create();
 	}
 
 	return nullptr;

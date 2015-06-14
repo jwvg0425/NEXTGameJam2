@@ -32,6 +32,5 @@ public:
 private:
 	TileMap* m_Map;
 	cocos2d::Vector<Unit*> m_Units;
-	UILayer* m_UI;
 	std::string m_Name;
 };

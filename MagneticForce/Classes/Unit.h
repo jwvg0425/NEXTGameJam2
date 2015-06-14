@@ -39,8 +39,14 @@ public:
 
 	float getFriction() const { return m_Friction; }
 
-protected:
+	bool isStatic() const { return m_IsStatic; }
+	bool isSolid() const { return m_IsSolid; }
 
+	virtual void hurt(float hp);
+
+protected:
+	bool m_IsSolid = true;
+	bool m_IsStatic = false;
 	Direction m_Dir = Direction::DOWN;
 	cocos2d::Sprite* m_Sprite = nullptr;
 

@@ -76,7 +76,8 @@ bool Unit::moveCheck(cocos2d::Point pos)
 
 void Unit::force(float fx, float fy)
 {
-	m_Force.add({ fx, fy });
+	if (!m_IsStatic)
+		m_Force.add({ fx, fy });
 }
 
 void Unit::update(float dTime)
@@ -90,6 +91,11 @@ void Unit::collision(Unit* unit, float power)
 }
 
 void Unit::collision(float power)
+{
+
+}
+
+void Unit::hurt(float hp)
 {
 
 }

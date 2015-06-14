@@ -481,26 +481,12 @@ void Player::push(float dTime)
 
 void Player::collision(float power)
 {
-	//hp 일정량만큼 뺌
-
-	auto e = Effect::create("collision_effect", "player_hurt", getPositionX(), getPositionY(), 
-	[](Effect* e)
-	{
-		e->removeFromParent();
-	});
-
-	m_Status->m_Hp -= power / 10.0f;
+	hurt(power / 10.0f);
 }
 
 void Player::collision(Unit* unit, float power)
 {
-	auto e = Effect::create("collision_effect", "player_hurt", getPositionX(), getPositionY(),
-	[](Effect* e)
-	{
-		e->removeFromParent();
-	});
-
-	m_Status->m_Hp -= power / 10.0f;
+	hurt(power / 10.0f);
 }
 
 void Player::changeSpriteByType(ActType type)
@@ -542,6 +528,34 @@ void Player::changeSpriteByType(ActType type)
 		}
 		break;
 	}
+}
+
+void Player::hurt(float hp)
+{
+	//무적이면 뎀 무시
+	if (m_Invincible)
+		return;
+
+	auto e = Effect::create("collision_effect", "player_hurt", getPositionX(), getPositionY(),
+		[](Effect* e)
+	{
+		e->removeFromParent();
+	});
+
+	m_Status->m_Hp -= hp;
+
+	//1초간 무적
+	invincible(1.0f);
+}
+
+void Player::invincible(float time)
+{
+	m_Invincible = true;
+
+	auto action = Blink::create(time, 3 * time);
+	auto sequence = Sequence::create(action, CallFunc::create([this](){m_Invincible = false; }), nullptr);
+
+	runAction(sequence);
 }
 
 

@@ -15,6 +15,8 @@ bool Portal::init(const std::string& nextStage)
 	m_NextStage = nextStage;
 
 	scheduleUpdate();
+
+	return true;
 }
 
 Portal* Portal::create(const std::string& nextStage)

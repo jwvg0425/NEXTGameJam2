@@ -12,6 +12,7 @@ Scene* GameScene::createScene(const std::string& fileName)
     auto layer = GameScene::create(fileName);
 
     scene->addChild(layer);
+	scene->addChild(UILayer::create());
 
     return scene;
 }
@@ -30,10 +31,6 @@ bool GameScene::init(const std::string& fileName)
 	m_Map->setAnchorPoint({ 0.0f, 0.0f });
 
 	addChild(m_Map, -100000);
-
-	m_UI = UILayer::create();
-
-	addChild(m_UI, 1000);
 
 	scheduleUpdate();
 	
@@ -77,8 +74,6 @@ void GameScene::setFocus(float x, float y)
 	}
 
 	setPosition(focusX, focusY);
-
-	m_UI->setPosition(-focusX, -focusY);
 }
 
 void GameScene::addUnit(Unit* unit)
@@ -97,6 +92,9 @@ bool GameScene::moveCheck(Unit* unit, cocos2d::Point pos)
 	for (auto u : m_Units)
 	{
 		if (u == unit)
+			continue;
+
+		if (!u->isSolid())
 			continue;
 
 		moveBox = u->getMoveBox();
@@ -122,6 +120,9 @@ bool GameScene::hitCheck(Unit* unit, cocos2d::Point pos)
 	for (auto u : m_Units)
 	{
 		if (u == unit)
+			continue;
+
+		if (!u->isSolid())
 			continue;
 
 		hitBox = u->getHitBox();
@@ -166,12 +167,16 @@ void GameScene::physics(float dTime)
 		{
 			conditionCheck([pos, u](Unit* unit) -> bool
 			{
-				cocos2d::Rect moveBox = u->getMoveBox();
-				cocos2d::Rect realMoveA(pos.x + moveBox.origin.x, pos.y + moveBox.origin.y,
-					moveBox.size.width - moveBox.origin.x, moveBox.size.height - moveBox.origin.y);
 
 				if (u == unit)
 					return false;
+
+				if (!unit->isSolid())
+					return false;
+
+				cocos2d::Rect moveBox = u->getMoveBox();
+				cocos2d::Rect realMoveA(pos.x + moveBox.origin.x, pos.y + moveBox.origin.y,
+					moveBox.size.width - moveBox.origin.x, moveBox.size.height - moveBox.origin.y);
 
 				moveBox = unit->getMoveBox();
 				cocos2d::Rect realMoveB(unit->getPositionX() + moveBox.origin.x, unit->getPositionY() + moveBox.origin.y,

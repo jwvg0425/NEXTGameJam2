@@ -74,6 +74,9 @@ public:
 	State getState() const { return m_State; }
 	ActType getActType() const { return m_Type; }
 
+	void hurt(float hp) override;
+	void invincible(float time);
+
 private:
 	void changeSpriteByType(ActType type);
 
@@ -82,4 +85,5 @@ private:
 	int m_ArrowPressed = 0;
 	PlayerStatus* m_Status = nullptr;
 	unsigned int m_Drone = 0;
+	bool m_Invincible = false;
 };
