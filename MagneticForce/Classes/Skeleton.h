@@ -17,6 +17,8 @@ public:
 	void hurt(float hp) override;
 	void invincible(float time);
 	void die();
+	void force(float fx, float fy) override;
+	void changeDirection(Direction dir) override;
 
 	CREATE_FUNC(Skeleton);
 
@@ -25,4 +27,5 @@ private:
 	bool m_Invincible = false;
 	bool m_IsDie = false;
 	bool m_IsFocus = false;
+	bool m_IsMove = false;
 };

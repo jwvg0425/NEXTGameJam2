@@ -23,7 +23,7 @@ public:
 	bool moveCheck(cocos2d::Point pos);
 
 	//힘을 가함
-	void force(float fx, float fy);
+	virtual void force(float fx, float fy);
 
 	//기본적으로 해주어야하는 unit update 연산.
 	void update(float dTime);
