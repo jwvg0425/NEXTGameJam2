@@ -1,6 +1,7 @@
-# NEXTGameJam2
+# Magnetic Force
 
 **독특한 무기**라는 주제를 바탕으로 진행된 NEXT 2회 게임잼 게임입니다.
+
 ![screenshot](https://github.com/jwvg0425/NEXTGameJam2/blob/master/screenshot/screenshot1.PNG)  
 
 ![screenshot](https://github.com/jwvg0425/NEXTGameJam2/blob/master/screenshot/screenshot2.PNG)  
