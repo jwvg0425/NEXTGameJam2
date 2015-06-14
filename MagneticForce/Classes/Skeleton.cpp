@@ -170,7 +170,7 @@ void Skeleton::die()
 	DataManager::getInstance()->getStatus()->m_MaxMp += 5.0f;
 	DataManager::getInstance()->getStatus()->m_Mp += 5.0f;
 	DataManager::getInstance()->getStatus()->m_MpRegen += 1.0f;
-	DataManager::getInstance()->getStatus()->m_Speed += 20.0f;
+	DataManager::getInstance()->getStatus()->m_Speed += 5.0f;
 	DataManager::getInstance()->getStatus()->m_PullPower += 1000.0f;
 	DataManager::getInstance()->getStatus()->m_PushPower += 800.0f;
 	DataManager::getInstance()->getNowScene()->removeUnit(this);
