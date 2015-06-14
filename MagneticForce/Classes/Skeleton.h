@@ -24,7 +24,7 @@ public:
 	CREATE_FUNC(Skeleton);
 
 private:
-	float m_Hp = 40.0f;
+	float m_Hp = 20.0f;
 	bool m_Invincible = false;
 	bool m_IsDie = false;
 	bool m_IsFocus = false;

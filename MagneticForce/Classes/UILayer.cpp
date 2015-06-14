@@ -2,6 +2,7 @@
 #include "DataManager.h"
 #include "AppDelegate.h"
 #include "Player.h"
+#include "Tiger.h"
 
 bool UILayer::init()
 {
@@ -55,6 +56,18 @@ bool UILayer::init()
 	m_PushCry->setPosition(WIDTH / 2 + 140 + 144, 5);
 	addChild(m_PushCry);
 
+	m_BossUI = DataManager::getInstance()->getSprite("boss_gauge");
+	m_BossUI->setAnchorPoint({ 0.0f, 0.0f });
+	m_BossUI->setPosition(WIDTH / 2 - 230, HEIGHT - 51);
+	addChild(m_BossUI);
+	m_BossUI->setVisible(false);
+
+	m_BossHP = DataManager::getInstance()->getSprite("boss_bar");
+	m_BossHP->setAnchorPoint({ 0.0f, 0.0f });
+	m_BossHP->setPosition(WIDTH / 2 - 230, HEIGHT - 51);
+	addChild(m_BossHP);
+	m_BossHP->setVisible(false);
+
 	scheduleUpdate();
 
 	return true;
@@ -91,5 +104,19 @@ void UILayer::update(float dTime)
 		m_Pull->setOpacity(255);
 		m_Push->setOpacity(255);
 		m_ToggleEffect = 0.0f;
+	}
+	auto boss = DataManager::getInstance()->getBoss();
+
+	if (boss != nullptr)
+	{
+		m_BossUI->setVisible(true);
+		m_BossHP->setVisible(true);
+
+		m_BossHP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, 58.0f + boss->getHp() / boss->getMaxHp()*394.0f, 46.0f));
+	}
+	else
+	{
+		m_BossHP->setVisible(false);
+		m_BossUI->setVisible(false);
 	}
 }

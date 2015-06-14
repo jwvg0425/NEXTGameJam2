@@ -9,6 +9,7 @@ struct PlayerStatus
 	float m_Speed;
 	float m_MaxMp;
 	float m_Mp;
+	float m_MpRegen;
 	float m_PullPower;
 	float m_Hp;
 	float m_MaxHp;
@@ -23,6 +24,7 @@ struct PlayerStatus
 		m_Speed = 200.0f;
 		m_MaxMp = 100.0f;
 		m_Mp = 100.0f;
+		m_MpRegen = 4.0f;
 		m_PullPower = 20000.0f;
 		m_Hp = 100.0f;
 		m_MaxHp = 100.0f;

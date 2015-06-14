@@ -26,6 +26,9 @@ public:
 
 	void force(float fx, float fy) override;
 
+	float getHp() const { return m_Hp; }
+	float getMaxHp() const { return 200.0f; }
+
 	CREATE_FUNC(Tiger);
 
 private:

@@ -193,6 +193,7 @@ void Player::update(float dTime)
 	if (m_Status->m_Hp < 0.0f)
 	{
 		m_Status->init();
+		DataManager::getInstance()->setBoss(nullptr);
 		Director::getInstance()->replaceScene(GameScene::createScene("stage1"));
 		return;
 	}
@@ -208,7 +209,7 @@ void Player::update(float dTime)
 	{
 		if (m_Status->m_Mp < m_Status->m_MaxMp - 2.0f*dTime)
 		{
-			m_Status->m_Mp += 4.0f*dTime;
+			m_Status->m_Mp += m_Status->m_MpRegen*dTime;
 		}
 		else
 		{

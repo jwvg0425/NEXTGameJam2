@@ -20,6 +20,8 @@ private:
 	cocos2d::Sprite* m_Push;
 	cocos2d::Sprite* m_PullCry;
 	cocos2d::Sprite* m_PushCry;
+	cocos2d::Sprite* m_BossHP;
+	cocos2d::Sprite* m_BossUI;
 
 	float m_ToggleEffect = 0.0f;
 };

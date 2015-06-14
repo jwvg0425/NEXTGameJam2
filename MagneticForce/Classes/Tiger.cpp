@@ -22,6 +22,7 @@ bool Tiger::init()
 	m_MoveBox = { -37, -37, 37, -22 };
 	m_HitBox = { -37, -37, 37, 37 };
 	m_Friction = 100.0f;
+	DataManager::getInstance()->setBoss(this);
 
 	scheduleUpdate();
 
@@ -30,6 +31,12 @@ bool Tiger::init()
 
 void Tiger::update(float dTime)
 {
+	if (m_IsDie)
+	{
+		die();
+		return;
+	}
+
 	Unit::update(dTime);
 
 	m_Time += dTime;
@@ -87,6 +94,10 @@ void Tiger::collision(Unit* unit, float power)
 
 void Tiger::hurt(float hp)
 {
+	//무적이면 뎀 무시
+	if (m_Invincible)
+		return;
+
 	auto e = Effect::create("collision_effect", "", getPositionX() - 20+ rand() % 40, getPositionY() - 20 + rand() % 40,
 		[](Effect* e)
 	{
@@ -99,16 +110,27 @@ void Tiger::hurt(float hp)
 	{
 		m_IsDie = true;
 	}
+	else
+	{
+		//0.3초간 무적
+		invincible(0.3f);
+	}
 }
 
 void Tiger::invincible(float time)
 {
+	m_Invincible = true;
+
+	auto action = Blink::create(time, 1);
+	auto sequence = Sequence::create(action, CallFunc::create([this](){ m_Invincible = false; }), nullptr);
+
+	runAction(sequence);
 }
 
 void Tiger::die()
 {
-	DataManager::getInstance()->getNowScene()->removeUnit(this);
-	removeFromParent();
+	DataManager::getInstance()->setBoss(nullptr);
+	DataManager::getInstance()->getNowScene()->removeAllUnits();
 }
 
 void Tiger::stop(float dTime)
@@ -186,8 +208,8 @@ void Tiger::summon(float dTime)
 	{
 		DataManager::getInstance()->playEffect("summon");
 
-		//소환. 슬라임 3 or 스켈레톤 1.	
-		if (rand() % 2)
+		//소환. 슬라임 3 or 스켈레톤 1.	 스켈레톤 잡기 너무 어렵다. 좀 잘 안나오게 하자.
+		if (rand() % 5 != 0)
 		{
 			//슬라임
 			for (int i = 0; i < 3; i++)

@@ -29,6 +29,7 @@ enum TileProperty
 class Unit;
 class Player;
 class GameScene;
+class Tiger;
 
 struct PlayerStatus;
 
@@ -58,6 +59,8 @@ public:
 
 	void				initPortal();
 	std::string			getNextStage(const std::string& portal);
+	Tiger*				getBoss()const { return m_Boss; }
+	void				setBoss(Tiger* boss){ m_Boss = boss; }
 
 private:
 	DataManager();
@@ -67,6 +70,7 @@ private:
 	std::map<std::string, int> m_TileProperties;
 	std::map<std::string, std::string> m_Portals;
 	Player* m_Player = nullptr;
+	Tiger*	m_Boss = nullptr;
 	GameScene* m_NowScene;
 	PlayerStatus* m_Status;
 };
