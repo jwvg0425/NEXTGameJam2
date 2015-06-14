@@ -56,4 +56,30 @@ void UILayer::update(float dTime)
 
 	m_HP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, 20.0f + player->getHp() / player->getMaxHp()*201.0f, 64.0f));
 	m_MP->setTextureRect(cocos2d::Rect(0.0f, 0.0f, 20.0f + player->getMp() / player->getMaxMp()*201.0f, 64.0f));
+
+
+	//동작 중 - push/ pull일 땐 해당 아이콘 반짝반짝하게
+	if (player->getState() == Player::ACT)
+	{
+		m_ToggleEffect += dTime * 10;
+
+		float effectValue = (cos(m_ToggleEffect) + 1.0f) / 2.0f;
+
+		if (player->getActType() == Player::PULL)
+		{
+			m_Push->setOpacity(255);
+			m_Pull->setOpacity( 50 + effectValue * 205);
+		}
+		else if(player->getActType() == Player::PUSH)
+		{
+			m_Pull->setOpacity(255);
+			m_Push->setOpacity(50 + effectValue * 205);
+		}
+	}
+	else
+	{
+		m_Pull->setOpacity(255);
+		m_Push->setOpacity(255);
+		m_ToggleEffect = 0.0f;
+	}
 }

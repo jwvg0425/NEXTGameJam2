@@ -18,4 +18,6 @@ private:
 	cocos2d::Sprite* m_MP;
 	cocos2d::Sprite* m_Pull;
 	cocos2d::Sprite* m_Push;
+
+	float m_ToggleEffect = 0.0f;
 };

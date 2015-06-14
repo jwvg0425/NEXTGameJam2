@@ -53,7 +53,12 @@ public:
 	bool isEnablePush() const { return m_EnablePush; }
 	bool isEnablePull() const { return m_EnablePull; }
 
+	State getState() const { return m_State; }
+	ActType getActType() const { return m_Type; }
+
 private:
+	void changeSpriteByType(ActType type);
+
 	State m_State;
 	ActType m_Type = NONE;
 	int m_ArrowPressed = 0;

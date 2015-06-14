@@ -71,21 +71,7 @@ void Player::setState(State state)
 		}
 		break;
 	case ACT:
-		switch (m_Dir)
-		{
-		case Direction::UP:
-			changeSprite("player_act_up", true);
-			break;
-		case Direction::RIGHT:
-			changeSprite("player_act_right", true);
-			break;
-		case Direction::DOWN:
-			changeSprite("player_act_down", true);
-			break;
-		case Direction::LEFT:
-			changeSprite("player_act_left", true);
-			break;
-		}
+		changeSpriteByType(m_Type);
 		break;
 	}
 	m_State = state;
@@ -111,16 +97,16 @@ void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Even
 	case EventKeyboard::KeyCode::KEY_A:
 		if (m_EnablePull)
 		{
-			setState(ACT);
 			m_Type = PULL;
+			setState(ACT);
 		}
 		break;
 	//s키 누르면 척력 발동
 	case EventKeyboard::KeyCode::KEY_S:
 		if (m_EnablePush)
 		{
-			setState(ACT);
 			m_Type = PUSH;
+			setState(ACT);
 		}
 		break;
 	}
@@ -484,3 +470,46 @@ void Player::collision(const cocos2d::Vector<Unit*>& units, float power)
 {
 	m_Hp -= power / 10.0f;
 }
+
+void Player::changeSpriteByType(ActType type)
+{
+	switch (type)
+	{
+	case PULL:
+		switch (m_Dir)
+		{
+		case Direction::UP:
+			changeSprite("player_act_pull_up", true);
+			break;
+		case Direction::RIGHT:
+			changeSprite("player_act_pull_right", true);
+			break;
+		case Direction::DOWN:
+			changeSprite("player_act_pull_down", true);
+			break;
+		case Direction::LEFT:
+			changeSprite("player_act_pull_left", true);
+			break;
+		}
+		break;
+	case PUSH:
+		switch (m_Dir)
+		{
+		case Direction::UP:
+			changeSprite("player_act_push_up", true);
+			break;
+		case Direction::RIGHT:
+			changeSprite("player_act_push_right", true);
+			break;
+		case Direction::DOWN:
+			changeSprite("player_act_push_down", true);
+			break;
+		case Direction::LEFT:
+			changeSprite("player_act_push_left", true);
+			break;
+		}
+		break;
+	}
+}
+
+

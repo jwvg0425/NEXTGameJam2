@@ -96,16 +96,28 @@
     <Text Include="..\Resources\data\tile.txt">
       <Filter>resource\data</Filter>
     </Text>
-    <Text Include="..\Resources\data\player_act_down.txt">
+    <Text Include="..\Resources\data\player_act_pull_down.txt">
       <Filter>resource\data</Filter>
     </Text>
-    <Text Include="..\Resources\data\player_act_left.txt">
+    <Text Include="..\Resources\data\player_act_pull_left.txt">
       <Filter>resource\data</Filter>
     </Text>
-    <Text Include="..\Resources\data\player_act_right.txt">
+    <Text Include="..\Resources\data\player_act_pull_up.txt">
       <Filter>resource\data</Filter>
     </Text>
-    <Text Include="..\Resources\data\player_act_up.txt">
+    <Text Include="..\Resources\data\player_act_push_down.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_push_up.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_push_left.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_push_right.txt">
+      <Filter>resource\data</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_pull_right.txt">
       <Filter>resource\data</Filter>
     </Text>
   </ItemGroup>

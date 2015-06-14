@@ -54,6 +54,7 @@ cocos2d::Animation* DataManager::getAnimation(const std::string& fileName)
 		for (int i = 0; i < frameNum; i++)
 		{
 			animation->addSpriteFrameWithFile(fileName);
+			animation->getFrames().at(i)->getSpriteFrame()->getTexture()->setAliasTexParameters();
 		}
 	}
 
