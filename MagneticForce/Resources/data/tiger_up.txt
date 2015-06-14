@@ -1,0 +1,5 @@
+0.2
+tiger_up1.png 1
+tiger_up2.png 1
+tiger_up3.png 1
+tiger_up2.png 1

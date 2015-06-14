@@ -63,6 +63,12 @@
     <ClCompile Include="..\Classes\Slime.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Skeleton.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Tiger.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -102,6 +108,12 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Slime.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Skeleton.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Tiger.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -184,6 +196,18 @@
       <Filter>resource\data\animation</Filter>
     </Text>
     <Text Include="..\Resources\data\skeleton_down.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\tiger_left.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\tiger_up.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\tiger_right.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\tiger_down.txt">
       <Filter>resource\data\animation</Filter>
     </Text>
   </ItemGroup>

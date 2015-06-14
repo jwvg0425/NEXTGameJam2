@@ -7,6 +7,8 @@
 #include "GameScene.h"
 #include "Thorn.h"
 #include "Slime.h"
+#include "Skeleton.h"
+#include "Tiger.h"
 
 using namespace CocosDenshion;
 
@@ -133,6 +135,14 @@ Unit* DataManager::getObject(const std::string& objName)
 	else if (objName == "slime")
 	{
 		return Slime::create();
+	}
+	else if (objName == "skeleton")
+	{
+		return Skeleton::create();
+	}
+	else if (objName == "tiger")
+	{
+		return Tiger::create();
 	}
 
 	return nullptr;
