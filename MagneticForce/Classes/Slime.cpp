@@ -17,7 +17,7 @@ bool Slime::init()
 
 	m_MoveBox = { -10, -7, 11, -1 };
 	m_HitBox = { -10, -7, 11, 4 };
-	m_Friction = 200.0f;
+	m_Friction = 100.0f;
 
 	scheduleUpdate();
 

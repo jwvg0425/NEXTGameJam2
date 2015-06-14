@@ -168,5 +168,8 @@
     <Text Include="..\Resources\data\slime.txt">
       <Filter>resource\data\animation</Filter>
     </Text>
+    <Text Include="..\Resources\data\stage3.txt">
+      <Filter>resource\data\stage</Filter>
+    </Text>
   </ItemGroup>
 </Project>

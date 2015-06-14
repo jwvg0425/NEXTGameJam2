@@ -94,3 +94,5 @@ thorn 18 13
 thorn 18 12
 thorn 18 11
 player 9 27
+portal 11 0
+portal 12 0

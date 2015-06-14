@@ -198,6 +198,7 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <Text Include="..\Resources\data\player_up.txt" />
     <Text Include="..\Resources\data\stage2.txt" />
     <Text Include="..\Resources\data\slime.txt" />
+    <Text Include="..\Resources\data\stage3.txt" />
     <Text Include="..\Resources\data\tile.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
