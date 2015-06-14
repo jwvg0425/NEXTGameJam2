@@ -23,7 +23,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     director->setDisplayStats(false);
     director->setAnimationInterval(1.0 / 60);
 
-    auto scene = GameScene::createScene();
+    auto scene = GameScene::createScene("stage1");
     director->runWithScene(scene);
 
     return true;

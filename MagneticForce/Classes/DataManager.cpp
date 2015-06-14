@@ -2,6 +2,9 @@
 #include "Player.h"
 #include "box.h"
 #include <fstream>
+#include "SimpleAudioEngine.h" 
+
+using namespace CocosDenshion;
 
 USING_NS_CC;
 
@@ -114,4 +117,37 @@ Unit* DataManager::getObject(const std::string& objName)
 	}
 
 	return nullptr;
+}
+
+void DataManager::initSound()
+{
+	std::ifstream file("data/sound.txt");
+
+	if (!file.is_open())
+	{
+		CCLOG("sound.txt file is not existed.");
+		return;
+	}
+
+	while (!file.eof())
+	{
+		std::string token;
+		std::string name;
+
+		file >> token >> name;
+
+		if (token == "effect")
+		{
+			SimpleAudioEngine::getInstance()->preloadEffect(("sound/" + name).c_str());
+		}
+		else if (token == "background")
+		{
+			SimpleAudioEngine::getInstance()->preloadBackgroundMusic(("sound/" + name).c_str());
+		}
+	}
+}
+
+int DataManager::playEffect(const std::string& name)
+{
+	return SimpleAudioEngine::getInstance()->playEffect(("sound/" + name + ".wav").c_str());
 }

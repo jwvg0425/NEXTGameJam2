@@ -37,11 +37,14 @@ public:
 	cocos2d::Sprite*	getTile(const std::string& fileName, TileType type);
 	cocos2d::Sprite*	getSprite(const std::string& fileName);
 	void				initTile();
+	void				initSound();
 	int					getTileProperty(const std::string& tileName);
 	Unit*				getObject(const std::string& objName);
 
 	void				initPlayer(Player* player) { m_Player = player; }
 	Player*				getPlayer() const { return m_Player; }
+
+	int					playEffect(const std::string& name);
 
 private:
 	DataManager();

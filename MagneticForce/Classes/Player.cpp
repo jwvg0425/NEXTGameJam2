@@ -71,6 +71,7 @@ void Player::setState(State state)
 		}
 		break;
 	case ACT:
+		DataManager::getInstance()->playEffect("pull_push");
 		changeSpriteByType(m_Type);
 		break;
 	}
@@ -463,11 +464,13 @@ void Player::push(float dTime)
 void Player::collision(float power)
 {
 	//hp 일정량만큼 뺌
+	DataManager::getInstance()->playEffect("player_hurt");
 	m_Hp -= power / 10.0f;
 }
 
 void Player::collision(const cocos2d::Vector<Unit*>& units, float power)
 {
+	DataManager::getInstance()->playEffect("player_hurt");
 	m_Hp -= power / 10.0f;
 }
 

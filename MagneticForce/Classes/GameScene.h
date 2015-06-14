@@ -8,10 +8,10 @@ class UILayer;
 class GameScene : public cocos2d::Layer
 {
 public:
-    static cocos2d::Scene* createScene();
-    bool init() override;
+    static cocos2d::Scene* createScene(const std::string& fileName);
+    bool init(const std::string& fileName);
     
-	CREATE_FUNC(GameScene);
+	static GameScene* create(const std::string& fileName);
 
 	// x, y 좌표가 중심에 오도록 화면 좌표 변경
 	void setFocus(float x, float y);

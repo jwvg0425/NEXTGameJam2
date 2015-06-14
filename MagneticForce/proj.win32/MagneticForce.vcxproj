@@ -172,7 +172,8 @@ xcopy /Y /Q "$(EngineRoot)external\websockets\prebuilt\win32\*.*" "$(OutDir)"</C
     <ResourceCompile Include="game.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Resources\data\map.txt" />
+    <Text Include="..\Resources\data\sound.txt" />
+    <Text Include="..\Resources\data\stage1.txt" />
     <Text Include="..\Resources\data\player_act_pull_down.txt" />
     <Text Include="..\Resources\data\player_act_pull_left.txt" />
     <Text Include="..\Resources\data\player_act_pull_right.txt" />

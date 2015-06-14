@@ -5,24 +5,24 @@
 
 USING_NS_CC;
 
-Scene* GameScene::createScene()
+Scene* GameScene::createScene(const std::string& fileName)
 {
     auto scene = Scene::create();
-    auto layer = GameScene::create();
+    auto layer = GameScene::create(fileName);
 
     scene->addChild(layer);
 
     return scene;
 }
 
-bool GameScene::init()
+bool GameScene::init(const std::string& fileName)
 {
     if ( !Layer::init() )
     {
         return false;
     }
 
-	m_Map = TileMap::createWithFile("map", this);
+	m_Map = TileMap::createWithFile(fileName, this);
 	m_Map->setAnchorPoint({ 0.0f, 0.0f });
 
 	addChild(m_Map, -100000);
@@ -225,4 +225,23 @@ void GameScene::physics(float dTime)
 void GameScene::update(float dTime)
 {
 	physics(dTime);
+}
+
+GameScene* GameScene::create(const std::string& fileName)
+{
+	GameScene* ret = new GameScene();
+
+	if (ret != nullptr && ret->init(fileName))
+	{
+		ret->autorelease();
+
+		return ret;
+	}
+	else
+	{
+		delete ret;
+		ret = nullptr;
+
+		return ret;
+	}
 }
