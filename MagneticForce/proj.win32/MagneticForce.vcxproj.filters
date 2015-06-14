@@ -60,6 +60,9 @@
     <ClCompile Include="..\Classes\Thorn.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Slime.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -96,6 +99,9 @@
       <Filter>Classes</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Thorn.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Slime.h">
       <Filter>Classes</Filter>
     </ClInclude>
   </ItemGroup>
@@ -157,6 +163,9 @@
       <Filter>resource\data\animation</Filter>
     </Text>
     <Text Include="..\Resources\data\player_up.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\slime.txt">
       <Filter>resource\data\animation</Filter>
     </Text>
   </ItemGroup>

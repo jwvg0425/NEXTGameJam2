@@ -486,7 +486,8 @@ void Player::collision(float power)
 
 void Player::collision(Unit* unit, float power)
 {
-	hurt(power / 10.0f);
+	if(unit->isSolid())
+		hurt(power / 10.0f);
 }
 
 void Player::changeSpriteByType(ActType type)

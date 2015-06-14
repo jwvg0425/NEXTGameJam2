@@ -6,6 +6,7 @@
 #include "Portal.h"
 #include "GameScene.h"
 #include "Thorn.h"
+#include "Slime.h"
 
 using namespace CocosDenshion;
 
@@ -55,14 +56,14 @@ cocos2d::Animation* DataManager::getAnimation(const std::string& fileName)
 
 	while(!file.eof())
 	{
-		std::string fileName;
+		std::string name;
 		int frameNum;
-		file >> fileName >> frameNum;
-		fileName = "graphics/" + fileName;
+		file >> name >> frameNum;
+		name = "graphics/" + name;
 
 		for (int i = 0; i < frameNum; i++)
 		{
-			animation->addSpriteFrameWithFile(fileName);
+			animation->addSpriteFrameWithFile(name);
 			animation->getFrames().at(i)->getSpriteFrame()->getTexture()->setAliasTexParameters();
 		}
 	}
@@ -128,6 +129,10 @@ Unit* DataManager::getObject(const std::string& objName)
 	else if (objName == "thorn")
 	{
 		return Thorn::create();
+	}
+	else if (objName == "slime")
+	{
+		return Slime::create();
 	}
 
 	return nullptr;

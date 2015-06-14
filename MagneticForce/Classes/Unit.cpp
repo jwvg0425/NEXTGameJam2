@@ -82,7 +82,7 @@ void Unit::force(float fx, float fy)
 
 void Unit::update(float dTime)
 {
-	setZOrder(-getPositionY());
+	setZOrder(-getPositionY() - m_MoveBox.origin.y);
 }
 
 void Unit::collision(Unit* unit, float power)

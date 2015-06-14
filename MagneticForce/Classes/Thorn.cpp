@@ -19,6 +19,9 @@ void Thorn::update(float dTime)
 
 	scene->conditionCheck([this](Unit* unit) -> bool
 	{
+		if (unit == this)
+			return false;
+
 		cocos2d::Rect rect = { getPositionX() - 24.0f, getPositionY() - 24.0f, 48.0f, 48.0f };
 
 		cocos2d::Rect moveBox = unit->getMoveBox();
@@ -70,7 +73,7 @@ bool Thorn::init()
 
 	//1초마다 가시 on off 자동으로 바뀌도록
 
-	auto delay = DelayTime::create(1.0f);
+	auto delay = DelayTime::create(3.0f);
 	auto action = RepeatForever::create(Sequence::create(delay, CallFunc::create(CC_CALLBACK_0(Thorn::changeOnOff, this)), nullptr));
 
 	runAction(action);
