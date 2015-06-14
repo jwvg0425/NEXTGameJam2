@@ -7,9 +7,9 @@ public:
 	Effect() = default;
 	~Effect() override = default;
 
-	bool init(const std::string& file, std::function<void(Effect*)> endRoutine);
+	bool init(const std::string& file, const std::string& sound, std::function<void(Effect*)> endRoutine);
 
-	static Effect* create(const std::string& file, float x, float y ,std::function<void(Effect*)> endRoutine);
+	static Effect* create(const std::string& file, const std::string& sound, float x, float y ,std::function<void(Effect*)> endRoutine);
 
 	void endAnimation();
 

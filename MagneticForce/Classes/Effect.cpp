@@ -4,11 +4,16 @@
 
 USING_NS_CC;
 
-bool Effect::init(const std::string& file, std::function<void(Effect*)> endRoutine)
+bool Effect::init(const std::string& file, const std::string& sound, std::function<void(Effect*)> endRoutine)
 {
 	if (!cocos2d::Node::init())
 	{
 		return false;
+	}
+
+	if (sound != "")
+	{
+		DataManager::getInstance()->playEffect(sound);
 	}
 
 	m_EndRoutine = endRoutine;
@@ -27,11 +32,11 @@ bool Effect::init(const std::string& file, std::function<void(Effect*)> endRouti
 	return true;
 }
 
-Effect* Effect::create(const std::string& file, float x, float y, std::function<void(Effect*)> endRoutine)
+Effect* Effect::create(const std::string& file, const std::string& sound, float x, float y, std::function<void(Effect*)> endRoutine)
 {
 	Effect* ret = new Effect();
 
-	if (ret != nullptr && ret->init(file, endRoutine))
+	if (ret != nullptr && ret->init(file, sound, endRoutine))
 	{
 		ret->autorelease();
 

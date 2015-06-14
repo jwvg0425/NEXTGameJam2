@@ -465,9 +465,8 @@ void Player::push(float dTime)
 void Player::collision(float power)
 {
 	//hp 일정량만큼 뺌
-	DataManager::getInstance()->playEffect("player_hurt");
 
-	auto e = Effect::create("collision_effect", getPositionX(), getPositionY(), 
+	auto e = Effect::create("collision_effect", "player_hurt", getPositionX(), getPositionY(), 
 	[](Effect* e)
 	{
 		e->removeFromParent();
@@ -478,9 +477,7 @@ void Player::collision(float power)
 
 void Player::collision(const cocos2d::Vector<Unit*>& units, float power)
 {
-	DataManager::getInstance()->playEffect("player_hurt");
-
-	Effect::create("collision_effect", getPositionX(), getPositionY(), 
+	auto e = Effect::create("collision_effect", "player_hurt", getPositionX(), getPositionY(),
 	[](Effect* e)
 	{
 		e->removeFromParent();
