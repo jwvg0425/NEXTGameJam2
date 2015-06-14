@@ -28,6 +28,7 @@ enum TileProperty
 
 class Unit;
 class Player;
+class GameScene;
 
 class DataManager
 {
@@ -46,6 +47,8 @@ public:
 
 	int					playEffect(const std::string& name);
 	void				playBackgroundMusic(const std::string& name, bool loop);
+	GameScene*			getNowScene() const { return m_NowScene; }
+	void				setNowScene(GameScene* scene) { m_NowScene = scene; }
 
 private:
 	DataManager();
@@ -54,4 +57,5 @@ private:
 	cocos2d::Map<std::string, cocos2d::Animation*> m_Animations;
 	std::map<std::string, int> m_TileProperties;
 	Player* m_Player = nullptr;
+	GameScene* m_NowScene;
 };

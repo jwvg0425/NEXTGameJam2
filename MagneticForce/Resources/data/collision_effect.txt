@@ -1,0 +1,6 @@
+0.1
+collision_effect1.png 1
+collision_effect2.png 1
+collision_effect3.png 1
+collision_effect4.png 1
+collision_effect5.png 1

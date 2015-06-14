@@ -33,6 +33,7 @@ bool GameScene::init(const std::string& fileName)
 	addChild(m_UI, 1000);
 
 	scheduleUpdate();
+	DataManager::getInstance()->setNowScene(this);
 
 	DataManager::getInstance()->playBackgroundMusic("cave", true);
 

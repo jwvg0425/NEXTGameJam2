@@ -1,6 +1,7 @@
 ﻿#include "Player.h"
 #include "GameScene.h"
 #include "TileMap.h"
+#include "Effect.h"
 
 USING_NS_CC;
 
@@ -465,12 +466,26 @@ void Player::collision(float power)
 {
 	//hp 일정량만큼 뺌
 	DataManager::getInstance()->playEffect("player_hurt");
+
+	auto e = Effect::create("collision_effect", getPositionX(), getPositionY(), 
+	[](Effect* e)
+	{
+		e->removeFromParent();
+	});
+
 	m_Hp -= power / 10.0f;
 }
 
 void Player::collision(const cocos2d::Vector<Unit*>& units, float power)
 {
 	DataManager::getInstance()->playEffect("player_hurt");
+
+	Effect::create("collision_effect", getPositionX(), getPositionY(), 
+	[](Effect* e)
+	{
+		e->removeFromParent();
+	});
+
 	m_Hp -= power / 10.0f;
 }
 
