@@ -77,20 +77,16 @@ void Player::setState(State state)
 	case ACT:
 		DataManager::getInstance()->playEffect("pull_push");
 		changeSpriteByType(m_Type);
-		if (m_Drone == 0)
-		{
-			m_Drone = DataManager::getInstance()->playEffect("drone", true);
-		}
-		else
-		{
-			DataManager::getInstance()->resumeEffect(m_Drone);
-		}
 		break;
 	}
 
-	if (state != ACT && m_Drone != 0)
+	if (state != ACT)
 	{
-		DataManager::getInstance()->pauseEffect(m_Drone);
+		m_Type = NONE;
+		if (m_Drone != 0)
+		{
+			DataManager::getInstance()->pauseEffect(m_Drone);
+		}
 	}
 	
 	m_State = state;
@@ -114,7 +110,7 @@ void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Even
 		break;
 	//a키 누르면 인력 발동
 	case EventKeyboard::KeyCode::KEY_A:
-		if (m_Status->m_EnablePull)
+		if (m_Status->m_EnablePull && m_Type != PUSH_CRY && m_Type != PULL_CRY)
 		{
 			m_Type = PULL;
 			setState(ACT);
@@ -122,10 +118,28 @@ void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Even
 		break;
 	//s키 누르면 척력 발동
 	case EventKeyboard::KeyCode::KEY_S:
-		if (m_Status->m_EnablePush)
+		if (m_Status->m_EnablePush && m_Type != PUSH_CRY && m_Type != PULL_CRY)
 		{
 			m_Type = PUSH;
 			setState(ACT);
+		}
+		break;
+	case EventKeyboard::KeyCode::KEY_D:
+		if (m_Status->m_EnablePullCry && m_Type != PUSH_CRY  && m_Type != PULL_CRY && m_Status->m_Mp > 20.0f)
+		{
+			m_Type = PULL_CRY;
+			setState(ACT);
+			m_CryTime = 0.5f;
+			m_Status->m_Mp -= 20.0f;
+		}
+		break;
+	case EventKeyboard::KeyCode::KEY_F:
+		if (m_Status->m_EnablePushCry && m_Type != PUSH_CRY && m_Type != PULL_CRY && m_Status->m_Mp > 20.0f)
+		{
+			m_Type = PUSH_CRY;
+			setState(ACT);
+			m_CryTime = 0.5f;
+			m_Status->m_Mp -= 20.0f;
 		}
 		break;
 	}
@@ -186,7 +200,7 @@ void Player::update(float dTime)
 	{
 		if (m_Status->m_Mp < m_Status->m_MaxMp - 2.0f*dTime)
 		{
-			m_Status->m_Mp += 2.0f*dTime;
+			m_Status->m_Mp += 4.0f*dTime;
 		}
 		else
 		{
@@ -263,6 +277,22 @@ void Player::update(float dTime)
 		case PUSH:
 			push(dTime);
 			m_Status->m_Mp -= 5.0f*dTime;
+			break;
+		case PUSH_CRY:
+			pushCry(dTime);
+			m_CryTime -= dTime;
+			if (m_CryTime < 0.0f)
+			{
+				setState(IDLE);
+			}
+			break;
+		case PULL_CRY:
+			pullCry(dTime);
+			m_CryTime -= dTime;
+			if (m_CryTime < 0.0f)
+			{
+				setState(IDLE);
+			}
 			break;
 		}
 	}
@@ -495,6 +525,15 @@ void Player::changeSpriteByType(ActType type)
 	switch (type)
 	{
 	case PULL:
+		if (m_Drone == 0)
+		{
+			m_Drone = DataManager::getInstance()->playEffect("drone", true);
+		}
+		else
+		{
+			DataManager::getInstance()->resumeEffect(m_Drone);
+		}
+
 		switch (m_Dir)
 		{
 		case Direction::UP:
@@ -512,6 +551,15 @@ void Player::changeSpriteByType(ActType type)
 		}
 		break;
 	case PUSH:
+		if (m_Drone == 0)
+		{
+			m_Drone = DataManager::getInstance()->playEffect("drone", true);
+		}
+		else
+		{
+			DataManager::getInstance()->resumeEffect(m_Drone);
+		}
+
 		switch (m_Dir)
 		{
 		case Direction::UP:
@@ -525,6 +573,44 @@ void Player::changeSpriteByType(ActType type)
 			break;
 		case Direction::LEFT:
 			changeSprite("player_act_push_left", true);
+			break;
+		}
+		break;
+	case PULL_CRY:
+		DataManager::getInstance()->playEffect("cry");
+
+		switch (m_Dir)
+		{
+		case Direction::UP:
+			changeSprite("player_up2", false);
+			break;
+		case Direction::RIGHT:
+			changeSprite("player_right2", false);
+			break;
+		case Direction::DOWN:
+			changeSprite("player_down2", false);
+			break;
+		case Direction::LEFT:
+			changeSprite("player_left2", false);
+			break;
+		}
+		break;
+	case PUSH_CRY:
+		DataManager::getInstance()->playEffect("cry");
+
+		switch (m_Dir)
+		{
+		case Direction::UP:
+			changeSprite("player_up2", false);
+			break;
+		case Direction::RIGHT:
+			changeSprite("player_right2", false);
+			break;
+		case Direction::DOWN:
+			changeSprite("player_down2", false);
+			break;
+		case Direction::LEFT:
+			changeSprite("player_left2", false);
 			break;
 		}
 		break;
@@ -559,4 +645,57 @@ void Player::invincible(float time)
 	runAction(sequence);
 }
 
+void Player::pushCry(float dTime)
+{
+	cocos2d::Vector<Unit*> units;
+	GameScene* scene = static_cast<GameScene*>(getParent());
+	auto myPos = getPosition();
+	float fx = 0.0f, fy = 0.0f;
 
+	scene->conditionCheck([myPos](Unit* unit) -> bool
+	{
+		//거리 100안쪽은 다 밀어냄
+		if (unit->getPosition().getDistance(myPos) < 100.0f)
+			return true;
+
+		return false;
+	}, units);
+
+	for (auto unit : units)
+	{
+		//밀어낼 방향 구함.
+		auto vect = unit->getPosition() - getPosition();
+		vect.normalize();
+		vect *= 500.0f * dTime;
+
+		unit->force(vect.x, vect.y);
+	}
+}
+
+void Player::pullCry(float dTime)
+{
+	cocos2d::Vector<Unit*> units;
+	GameScene* scene = static_cast<GameScene*>(getParent());
+	auto myPos = getPosition();
+	float fx = 0.0f, fy = 0.0f;
+
+	scene->conditionCheck([myPos](Unit* unit) -> bool
+	{
+		//거리 100 ~ 200사이 끌어당김
+		if (unit->getPosition().getDistance(myPos) > 100.0f &&
+			unit->getPosition().getDistance(myPos) < 200.0f)
+			return true;
+
+		return false;
+	}, units);
+
+	for (auto unit : units)
+	{
+		//끌어당길 방향 구함.
+		auto vect = getPosition() - unit->getPosition();
+		vect.normalize();
+		vect *= 400.0f * dTime;
+
+		unit->force(vect.x, vect.y);
+	}
+}

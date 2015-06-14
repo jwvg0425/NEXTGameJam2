@@ -3,3 +3,5 @@ effect player_hurt.wav
 background cave.wav
 effect drone.wav
 effect thorn.wav
+effect slime.wav
+effect cry.wav

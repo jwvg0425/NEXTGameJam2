@@ -61,11 +61,6 @@ bool Unit::moveCheck(cocos2d::Point pos)
 {
 	GameScene* scene = static_cast<GameScene*>(getParent());
 
-	if (scene->getMap()->isSolidTile(pos.x, pos.y, m_MoveBox))
-	{
-		return true;
-	}
-
 	if (scene->moveCheck(this, pos))
 	{
 		return true;

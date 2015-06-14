@@ -69,8 +69,19 @@ size 2 20 30
  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0  0
 
 slime 8 16
+slime 8 11
+slime 3 9
+slime 5 10
+slime 2 14
+slime 2 17
+slime 14 21
 slime 13 19
 slime 11 4
+box 2 16
+box 8 13
+box 11 2
+box 4 9
+box 3 11
 thorn 8 20
 thorn 8 21
 thorn 15 19

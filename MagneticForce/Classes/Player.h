@@ -12,6 +12,8 @@ struct PlayerStatus
 	float m_PushPower = 15000.0f;
 	bool m_EnablePush = true;
 	bool m_EnablePull = true;
+	bool m_EnablePullCry = true;
+	bool m_EnablePushCry = true;
 };
 
 class Player : public Unit
@@ -29,6 +31,8 @@ public:
 		NONE,
 		PULL,
 		PUSH,
+		PULL_CRY,
+		PUSH_CRY
 	};
 
 	Player() = default;
@@ -65,11 +69,16 @@ public:
 	void pull(float dTime);
 	void push(float dTime);
 
+	void pullCry(float dTime);
+	void pushCry(float dTime);
+
 	void collision(float power) override;
 	void collision(Unit* unit, float power) override;
 
 	bool isEnablePush() const { return m_Status->m_EnablePush; }
 	bool isEnablePull() const { return m_Status->m_EnablePull; }
+	bool isEnablePushCry() const { return m_Status->m_EnablePushCry; }
+	bool isEnablePullCry() const { return m_Status->m_EnablePullCry; }
 
 	State getState() const { return m_State; }
 	ActType getActType() const { return m_Type; }
@@ -86,4 +95,5 @@ private:
 	PlayerStatus* m_Status = nullptr;
 	unsigned int m_Drone = 0;
 	bool m_Invincible = false;
+	float m_CryTime = 0.0f;
 };

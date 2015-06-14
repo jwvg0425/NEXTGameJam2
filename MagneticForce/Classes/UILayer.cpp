@@ -45,6 +45,16 @@ bool UILayer::init()
 	m_Push->setPosition(WIDTH / 2 + 140 + 48, 5 + 48);
 	addChild(m_Push);
 
+	m_PullCry = DataManager::getInstance()->getSprite("skill_d");
+	m_PullCry->setAnchorPoint({ 0.0f, 0.0f });
+	m_PullCry->setPosition(WIDTH / 2 + 140 + 96, 5 + 48);
+	addChild(m_PullCry);
+
+	m_PushCry = DataManager::getInstance()->getSprite("skill_f");
+	m_PushCry->setAnchorPoint({ 0.0f, 0.0f });
+	m_PushCry->setPosition(WIDTH / 2 + 140 + 144, 5 + 48);
+	addChild(m_PushCry);
+
 	scheduleUpdate();
 
 	return true;

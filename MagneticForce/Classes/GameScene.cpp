@@ -85,6 +85,12 @@ void GameScene::addUnit(Unit* unit)
 bool GameScene::moveCheck(Unit* unit, cocos2d::Point pos)
 {
 	cocos2d::Rect moveBox = unit->getMoveBox();
+
+	if(m_Map->isSolidTile(pos.x, pos.y, moveBox))
+	{
+		return true;
+	}
+
 	cocos2d::Rect realMoveA(pos.x + moveBox.origin.x,pos.y + moveBox.origin.y,
 		moveBox.size.width - moveBox.origin.x, moveBox.size.height - moveBox.origin.y);
 
