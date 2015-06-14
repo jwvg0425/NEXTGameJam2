@@ -27,8 +27,11 @@ public:
 	void update(float dTime);
 	void physics(float dTime);
 
+	const std::string& getMapName() const { return m_Name; }
+
 private:
 	TileMap* m_Map;
 	cocos2d::Vector<Unit*> m_Units;
 	UILayer* m_UI;
+	std::string m_Name;
 };

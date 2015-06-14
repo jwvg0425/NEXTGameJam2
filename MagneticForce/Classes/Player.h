@@ -1,6 +1,19 @@
 ﻿#pragma once
 #include "Unit.h"
 
+struct PlayerStatus
+{
+	float m_Speed = 200.0f;
+	float m_MaxMp = 100.0f;
+	float m_Mp = 100.0f;
+	float m_PullPower = 20000.0f;
+	float m_Hp = 100.0f;
+	float m_MaxHp = 100.0f;
+	float m_PushPower = 15000.0f;
+	bool m_EnablePush = true;
+	bool m_EnablePull = true;
+};
+
 class Player : public Unit
 {
 public:
@@ -37,21 +50,26 @@ public:
 	void setSpeed(float speed);
 
 
-	float getMaxMp() const { return m_MaxMp; }
-	float getMp() const { return m_Mp; }
+	float getMaxMp() const { return m_Status->m_MaxMp; }
+	float getMp() const { return m_Status->m_Mp; }
 
+	void setMaxMp(float maxMp) { m_Status->m_MaxMp = maxMp; }
+	void setMp(float mp) { m_Status->m_Mp = mp; }
 
-	void setMaxMp(float maxMp) { m_MaxMp = maxMp; }
-	void setMp(float mp) { m_Mp = mp; }
+	float getMaxHp() const { return m_Status->m_MaxHp; }
+	float getHp() const { return m_Status->m_Hp; }
+
+	void setMaxHp(float maxHp) { m_Status->m_MaxHp = maxHp; }
+	void setHp(float hp) { m_Status->m_Hp = hp; }
 
 	void pull(float dTime);
 	void push(float dTime);
 
 	void collision(float power) override;
-	void collision(const cocos2d::Vector<Unit*>& units, float power) override;
+	void collision(Unit* unit, float power) override;
 
-	bool isEnablePush() const { return m_EnablePush; }
-	bool isEnablePull() const { return m_EnablePull; }
+	bool isEnablePush() const { return m_Status->m_EnablePush; }
+	bool isEnablePull() const { return m_Status->m_EnablePull; }
 
 	State getState() const { return m_State; }
 	ActType getActType() const { return m_Type; }
@@ -62,12 +80,6 @@ private:
 	State m_State;
 	ActType m_Type = NONE;
 	int m_ArrowPressed = 0;
-	float m_Speed = 200.0f;
-	float m_Dash = 400.0f;
-	float m_MaxMp = 100.0f;
-	float m_Mp = 100.0f;
-	float m_PullPower = 20000.0f;
-	bool m_EnablePush = true;
-	bool m_EnablePull = true;
+	PlayerStatus* m_Status = nullptr;
 	unsigned int m_Drone = 0;
 };

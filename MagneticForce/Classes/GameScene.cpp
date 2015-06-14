@@ -23,6 +23,9 @@ bool GameScene::init(const std::string& fileName)
         return false;
     }
 
+	DataManager::getInstance()->setNowScene(this);
+	m_Name = fileName;
+	
 	m_Map = TileMap::createWithFile(fileName, this);
 	m_Map->setAnchorPoint({ 0.0f, 0.0f });
 
@@ -33,7 +36,7 @@ bool GameScene::init(const std::string& fileName)
 	addChild(m_UI, 1000);
 
 	scheduleUpdate();
-	DataManager::getInstance()->setNowScene(this);
+	
 
 	DataManager::getInstance()->playBackgroundMusic("cave", true);
 
@@ -168,7 +171,7 @@ void GameScene::physics(float dTime)
 					moveBox.size.width - moveBox.origin.x, moveBox.size.height - moveBox.origin.y);
 
 				if (u == unit)
-					return true;
+					return false;
 
 				moveBox = unit->getMoveBox();
 				cocos2d::Rect realMoveB(unit->getPositionX() + moveBox.origin.x, unit->getPositionY() + moveBox.origin.y,
@@ -182,11 +185,23 @@ void GameScene::physics(float dTime)
 				return false;
 			}, units);
 
-			if (units.size() > 1)
+			if (units.size() > 0)
 			{
+				std::set<std::pair<Unit*, Unit*>> pair;
+
 				for (auto unit : units)
 				{
-					unit->collision(u->getForce().getLength());
+					float power = u->getForce().getDistance(unit->getForce());
+					if (pair.find(std::make_pair(u, unit)) == pair.end())
+					{
+						u->collision(unit, power);
+						pair.insert(std::make_pair(u, unit));
+					}
+					if (pair.find(std::make_pair(unit, u)) == pair.end())
+					{
+						unit->collision(u, power);
+						pair.insert(std::make_pair(unit, u));
+					}
 				}
 
 				u->setForce({ 0.0f, 0.0f });

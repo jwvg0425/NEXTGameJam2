@@ -3,6 +3,8 @@
 #include "box.h"
 #include <fstream>
 #include "SimpleAudioEngine.h" 
+#include "Portal.h"
+#include "GameScene.h"
 
 using namespace CocosDenshion;
 
@@ -17,11 +19,14 @@ DataManager* DataManager::getInstance()
 
 DataManager::DataManager()
 {
+	m_Status = new PlayerStatus();
 	initTile();
+	initPortal();
 }
 
 DataManager::~DataManager()
 {
+	delete m_Status;
 }
 
 cocos2d::Animation* DataManager::getAnimation(const std::string& fileName)
@@ -115,6 +120,10 @@ Unit* DataManager::getObject(const std::string& objName)
 	{
 		return Box::create();
 	}
+	else if (objName == "portal")
+	{
+		return Portal::create(m_NowScene->getMapName());
+	}
 
 	return nullptr;
 }
@@ -170,4 +179,30 @@ void DataManager::stopEffect(int id)
 void DataManager::pauseEffect(int id)
 {
 	SimpleAudioEngine::getInstance()->pauseEffect(id);
+}
+
+void DataManager::initPortal()
+{
+	std::ifstream file("data/portal.txt");
+
+	if (!file.is_open())
+	{
+		CCLOG("tile.txt file is not existed.");
+		return;
+	}
+
+	while (!file.eof())
+	{
+		std::string portal;
+		std::string next;
+
+		file >> portal >> next;
+
+		m_Portals[portal] = next;
+	}
+}
+
+std::string DataManager::getNextStage(const std::string& portal)
+{
+	return m_Portals[portal];
 }

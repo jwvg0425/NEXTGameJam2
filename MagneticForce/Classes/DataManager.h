@@ -30,6 +30,8 @@ class Unit;
 class Player;
 class GameScene;
 
+struct PlayerStatus;
+
 class DataManager
 {
 public:
@@ -52,6 +54,10 @@ public:
 	void				playBackgroundMusic(const std::string& name, bool loop = false);
 	GameScene*			getNowScene() const { return m_NowScene; }
 	void				setNowScene(GameScene* scene) { m_NowScene = scene; }
+	PlayerStatus*		getStatus() { return m_Status; }
+
+	void				initPortal();
+	std::string			getNextStage(const std::string& portal);
 
 private:
 	DataManager();
@@ -59,6 +65,8 @@ private:
 
 	cocos2d::Map<std::string, cocos2d::Animation*> m_Animations;
 	std::map<std::string, int> m_TileProperties;
+	std::map<std::string, std::string> m_Portals;
 	Player* m_Player = nullptr;
 	GameScene* m_NowScene;
+	PlayerStatus* m_Status;
 };

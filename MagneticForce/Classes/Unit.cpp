@@ -84,7 +84,7 @@ void Unit::update(float dTime)
 	setZOrder(-getPositionY());
 }
 
-void Unit::collision(const cocos2d::Vector<Unit*>& units, float power)
+void Unit::collision(Unit* unit, float power)
 {
 
 }

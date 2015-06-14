@@ -12,7 +12,8 @@ bool Player::init()
 		return false;
 	}
 
-	changeSprite("player_down2", false);
+	m_Dir = Direction::UP;
+	changeSprite("player_up2", false);
 	setState(IDLE);
 
 	auto keyListener = EventListenerKeyboard::create();
@@ -22,13 +23,15 @@ bool Player::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyListener, this);
 
 	scheduleUpdate();
+	m_Status = DataManager::getInstance()->getStatus();
 
 	m_MoveBox = cocos2d::Rect(-6, -18, 7, -11);
 	m_HitBox = cocos2d::Rect(-6, -18, 7, 14);
-	//dash 0.5초
-	m_Friction = m_Dash * 2.5;
+	m_Friction = 250.0f;
 
 	DataManager::getInstance()->initPlayer(this);
+
+	
 
 	return true;
 }
@@ -111,7 +114,7 @@ void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Even
 		break;
 	//a키 누르면 인력 발동
 	case EventKeyboard::KeyCode::KEY_A:
-		if (m_EnablePull)
+		if (m_Status->m_EnablePull)
 		{
 			m_Type = PULL;
 			setState(ACT);
@@ -119,7 +122,7 @@ void Player::onKeyPressed(cocos2d::EventKeyboard::KeyCode keyCode, cocos2d::Even
 		break;
 	//s키 누르면 척력 발동
 	case EventKeyboard::KeyCode::KEY_S:
-		if (m_EnablePush)
+		if (m_Status->m_EnablePush)
 		{
 			m_Type = PUSH;
 			setState(ACT);
@@ -181,13 +184,13 @@ void Player::update(float dTime)
 
 	if (m_State != ACT)
 	{
-		if (m_Mp < m_MaxMp - 2.0f*dTime)
+		if (m_Status->m_Mp < m_Status->m_MaxMp - 2.0f*dTime)
 		{
-			m_Mp += 2.0f*dTime;
+			m_Status->m_Mp += 2.0f*dTime;
 		}
 		else
 		{
-			m_Mp = m_MaxMp;
+			m_Status->m_Mp = m_Status->m_MaxMp;
 		}
 
 		if (m_ArrowPressed == 0)
@@ -227,16 +230,16 @@ void Player::update(float dTime)
 		switch (m_Dir)
 		{
 		case Direction::UP:
-			nextPos.setPoint(getPositionX(), getPositionY() + m_Speed*dTime);
+			nextPos.setPoint(getPositionX(), getPositionY() + m_Status->m_Speed*dTime);
 			break;
 		case Direction::RIGHT:
-			nextPos.setPoint(getPositionX() + m_Speed*dTime, getPositionY());
+			nextPos.setPoint(getPositionX() + m_Status->m_Speed*dTime, getPositionY());
 			break;
 		case Direction::DOWN:
-			nextPos.setPoint(getPositionX(), getPositionY() - m_Speed*dTime);
+			nextPos.setPoint(getPositionX(), getPositionY() - m_Status->m_Speed*dTime);
 			break;
 		case Direction::LEFT:
-			nextPos.setPoint(getPositionX() - m_Speed*dTime, getPositionY());
+			nextPos.setPoint(getPositionX() - m_Status->m_Speed*dTime, getPositionY());
 			break;
 		}
 
@@ -247,7 +250,7 @@ void Player::update(float dTime)
 	}
 	else if (m_State == ACT)
 	{
-		if (m_Mp < 5.0f*dTime)
+		if (m_Status->m_Mp < 5.0f*dTime)
 		{
 			setState(IDLE);
 		}
@@ -255,11 +258,11 @@ void Player::update(float dTime)
 		{
 		case PULL:
 			pull(dTime);
-			m_Mp -= 5.0f*dTime;
+			m_Status->m_Mp -= 5.0f*dTime;
 			break;
 		case PUSH:
 			push(dTime);
-			m_Mp -= 5.0f*dTime;
+			m_Status->m_Mp -= 5.0f*dTime;
 			break;
 		}
 	}
@@ -267,7 +270,7 @@ void Player::update(float dTime)
 
 void Player::setSpeed(float speed)
 {
-	m_Speed = speed;
+	m_Status->m_Speed = speed;
 }
 
 void Player::pull(float dTime)
@@ -298,7 +301,7 @@ void Player::pull(float dTime)
 			return false;
 
 		}, units);
-		fx = m_PullPower;
+		fx = m_Status->m_PullPower;
 		break;
 	case Direction::UP:
 		scene->conditionCheck([myPos](Unit* unit) -> bool
@@ -319,7 +322,7 @@ void Player::pull(float dTime)
 			return false;
 
 		}, units);
-		fy = -m_PullPower;
+		fy = -m_Status->m_PullPower;
 		break;
 	case Direction::RIGHT:
 		scene->conditionCheck([myPos](Unit* unit) -> bool
@@ -340,7 +343,7 @@ void Player::pull(float dTime)
 			return false;
 
 		}, units);
-		fx = -m_PullPower;
+		fx = -m_Status->m_PullPower;
 		break;
 	case Direction::DOWN:
 		scene->conditionCheck([myPos](Unit* unit) -> bool
@@ -361,7 +364,7 @@ void Player::pull(float dTime)
 			return false;
 
 		}, units);
-		fy = m_PullPower;
+		fy = m_Status->m_PullPower;
 		break;
 	}
 
@@ -401,7 +404,7 @@ void Player::push(float dTime)
 			return false;
 
 		}, units);
-		fx = -m_PullPower;
+		fx = -m_Status->m_PushPower;
 		break;
 	case Direction::UP:
 		scene->conditionCheck([myPos](Unit* unit) -> bool
@@ -422,7 +425,7 @@ void Player::push(float dTime)
 			return false;
 
 		}, units);
-		fy = m_PullPower;
+		fy = m_Status->m_PushPower;
 		break;
 	case Direction::RIGHT:
 		scene->conditionCheck([myPos](Unit* unit) -> bool
@@ -443,7 +446,7 @@ void Player::push(float dTime)
 			return false;
 
 		}, units);
-		fx = m_PullPower;
+		fx = m_Status->m_PushPower;
 		break;
 	case Direction::DOWN:
 		scene->conditionCheck([myPos](Unit* unit) -> bool
@@ -464,7 +467,7 @@ void Player::push(float dTime)
 			return false;
 
 		}, units);
-		fy = -m_PullPower;
+		fy = -m_Status->m_PushPower;
 		break;
 	}
 
@@ -486,10 +489,10 @@ void Player::collision(float power)
 		e->removeFromParent();
 	});
 
-	m_Hp -= power / 10.0f;
+	m_Status->m_Hp -= power / 10.0f;
 }
 
-void Player::collision(const cocos2d::Vector<Unit*>& units, float power)
+void Player::collision(Unit* unit, float power)
 {
 	auto e = Effect::create("collision_effect", "player_hurt", getPositionX(), getPositionY(),
 	[](Effect* e)
@@ -497,7 +500,7 @@ void Player::collision(const cocos2d::Vector<Unit*>& units, float power)
 		e->removeFromParent();
 	});
 
-	m_Hp -= power / 10.0f;
+	m_Status->m_Hp -= power / 10.0f;
 }
 
 void Player::changeSpriteByType(ActType type)

@@ -13,6 +13,15 @@
     <Filter Include="resource\data">
       <UniqueIdentifier>{f80eadae-3e28-46a6-8263-b38b697f5a79}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resource\data\stage">
+      <UniqueIdentifier>{eaa6a6ec-fb61-4ee0-a2c5-b6916db60d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\data\config">
+      <UniqueIdentifier>{a33ae61b-2cd5-4e92-a29b-dd2fe5f58df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="resource\data\animation">
+      <UniqueIdentifier>{54dea33b-be63-4c43-b0a6-79614cc99960}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -43,6 +52,9 @@
       <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Effect.cpp">
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Portal.cpp">
       <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -77,6 +89,9 @@
     <ClInclude Include="..\Classes\Effect.h">
       <Filter>Classes</Filter>
     </ClInclude>
+    <ClInclude Include="..\Classes\Portal.h">
+      <Filter>Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="game.rc">
@@ -84,53 +99,59 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Resources\data\player_up.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_down.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_right.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_left.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\tile.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_act_pull_down.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_act_pull_left.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_act_pull_up.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_act_push_down.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_act_push_up.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_act_push_left.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_act_push_right.txt">
-      <Filter>resource\data</Filter>
-    </Text>
-    <Text Include="..\Resources\data\player_act_pull_right.txt">
-      <Filter>resource\data</Filter>
-    </Text>
     <Text Include="..\Resources\data\stage1.txt">
-      <Filter>resource\data</Filter>
+      <Filter>resource\data\stage</Filter>
+    </Text>
+    <Text Include="..\Resources\data\portal.txt">
+      <Filter>resource\data\config</Filter>
     </Text>
     <Text Include="..\Resources\data\sound.txt">
-      <Filter>resource\data</Filter>
+      <Filter>resource\data\config</Filter>
+    </Text>
+    <Text Include="..\Resources\data\stage2.txt">
+      <Filter>resource\data\stage</Filter>
+    </Text>
+    <Text Include="..\Resources\data\tile.txt">
+      <Filter>resource\data\config</Filter>
     </Text>
     <Text Include="..\Resources\data\collision_effect.txt">
-      <Filter>resource\data</Filter>
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_pull_down.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_pull_left.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_pull_right.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_pull_up.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_push_down.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_push_left.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_push_right.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_act_push_up.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_down.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_left.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_right.txt">
+      <Filter>resource\data\animation</Filter>
+    </Text>
+    <Text Include="..\Resources\data\player_up.txt">
+      <Filter>resource\data\animation</Filter>
     </Text>
   </ItemGroup>
 </Project>
