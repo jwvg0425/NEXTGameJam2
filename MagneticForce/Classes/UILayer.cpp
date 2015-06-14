@@ -37,22 +37,22 @@ bool UILayer::init()
 
 	m_Pull = DataManager::getInstance()->getSprite("skill_a");
 	m_Pull->setAnchorPoint({ 0.0f, 0.0f });
-	m_Pull->setPosition(WIDTH / 2 + 140, 5 + 48);
+	m_Pull->setPosition(WIDTH / 2 + 140, 5);
 	addChild(m_Pull);
 
 	m_Push = DataManager::getInstance()->getSprite("skill_s");
 	m_Push->setAnchorPoint({ 0.0f, 0.0f });
-	m_Push->setPosition(WIDTH / 2 + 140 + 48, 5 + 48);
+	m_Push->setPosition(WIDTH / 2 + 140 + 48, 5);
 	addChild(m_Push);
 
 	m_PullCry = DataManager::getInstance()->getSprite("skill_d");
 	m_PullCry->setAnchorPoint({ 0.0f, 0.0f });
-	m_PullCry->setPosition(WIDTH / 2 + 140 + 96, 5 + 48);
+	m_PullCry->setPosition(WIDTH / 2 + 140 + 96, 5);
 	addChild(m_PullCry);
 
 	m_PushCry = DataManager::getInstance()->getSprite("skill_f");
 	m_PushCry->setAnchorPoint({ 0.0f, 0.0f });
-	m_PushCry->setPosition(WIDTH / 2 + 140 + 144, 5 + 48);
+	m_PushCry->setPosition(WIDTH / 2 + 140 + 144, 5);
 	addChild(m_PushCry);
 
 	scheduleUpdate();
